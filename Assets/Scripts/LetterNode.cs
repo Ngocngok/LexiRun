@@ -72,6 +72,13 @@ public class LetterNode : MonoBehaviour
         ActorController actor = other.GetComponent<ActorController>();
         if (actor != null)
         {
+            // For bots, check if they should avoid this node
+            BotController bot = actor as BotController;
+            if (bot != null && bot.ShouldAvoidNode(this))
+            {
+                return; // Don't trigger touch for bots on wrong nodes
+            }
+            
             actor.OnNodeTouched(this);
         }
     }

@@ -19,13 +19,24 @@ MonoBehaviour:
   botMoveSpeed: 4
   botMistakeLimit: 3
   botReplanInterval: 2
+  botAvoidWrongNodes: 1
+  botAvoidanceRadius: 1.5
+  botAvoidanceSmoothSpeed: 5
   timeDeductionAtZeroProgress: 5
   hpLossAmount: 1
   wordsToWin: 3
   wordCompletionDelay: 1
   touchCooldown: 0.5
-  arenaSize: 30
+  arenaSize: 40
   nodeSpacing: 2
+  nodeRandomOffsetMin: 0.2
+  nodeRandomOffsetMax: 1
+  floatingTextHeight: 2
+  floatingTextLetterSpacing: 0.5
+  playerFloatingTextSize: 60
+  botFloatingTextSize: 40
+  unfilledLetterColor: {r: 1, g: 1, b: 1, a: 1}
+  filledLetterColor: {r: 0, g: 0, b: 1, a: 1}
   wordList:
   - APPLE
   - BREAD

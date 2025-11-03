@@ -61,36 +61,77 @@ public class GameManager : MonoBehaviour
             arenaParent = arenaObj.transform;
         }
         
-        // Create 26 letter nodes (A-Z) randomly positioned in the arena
+        // Create 26 letter nodes (A-Z) in a 4x7 grid with small random offsets
         char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
-        float halfSize = config.arenaSize / 2f;
         
-        List<Vector3> positions = new List<Vector3>();
-        
-        for (int i = 0; i < 26; i++)
+        // Shuffle the alphabet so letters aren't in A-Z order
+        for (int i = alphabet.Length - 1; i > 0; i--)
         {
-            Vector3 position;
-            int attempts = 0;
-            
-            do
+            int randomIndex = Random.Range(0, i + 1);
+            char temp = alphabet[i];
+            alphabet[i] = alphabet[randomIndex];
+            alphabet[randomIndex] = temp;
+        }
+        
+        int columns = config.arenaColumns;
+        int rows = config.arenaRows;
+        
+        // Calculate spacing to evenly distribute nodes
+        float spacingX = config.arenaWidth / (columns + 1);
+        float spacingZ = config.arenaHeight / (rows + 1);
+        
+        // Calculate starting position to center the grid
+        float startX = -config.arenaWidth / 2f + spacingX;
+        float startZ = -config.arenaHeight / 2f + spacingZ;
+        
+        int nodeIndex = 0;
+        int positionIndex = 0;
+        
+        for (int row = 0; row < rows; row++)
+        {
+            for (int col = 0; col < columns; col++)
             {
-                position = new Vector3(
-                    Random.Range(-halfSize, halfSize),
+                // Calculate grid position
+                Vector3 gridPosition = new Vector3(
+                    startX + col * spacingX,
                     0.5f,
-                    Random.Range(-halfSize, halfSize)
+                    startZ + row * spacingZ
                 );
-                attempts++;
+                
+                // Add small random offset in random direction
+                float randomAngle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
+                float randomDistance = Random.Range(config.nodeRandomOffsetMin, config.nodeRandomOffsetMax);
+                Vector3 randomOffset = new Vector3(
+                    Mathf.Cos(randomAngle) * randomDistance,
+                    0f,
+                    Mathf.Sin(randomAngle) * randomDistance
+                );
+                
+                Vector3 finalPosition = gridPosition + randomOffset;
+                
+                // Determine which letter to use
+                char letterToUse;
+                if (nodeIndex < 26)
+                {
+                    // Use the shuffled alphabet for first 26 nodes
+                    letterToUse = alphabet[nodeIndex];
+                }
+                else
+                {
+                    // For the last 2 positions, pick random letters from the alphabet
+                    letterToUse = alphabet[Random.Range(0, 26)];
+                }
+                
+                GameObject nodeObj = Instantiate(letterNodePrefab, finalPosition, Quaternion.identity, arenaParent);
+                nodeObj.name = "Node_" + letterToUse + "_" + positionIndex;
+                
+                LetterNode node = nodeObj.GetComponent<LetterNode>();
+                node.Initialize(letterToUse);
+                letterNodes.Add(node);
+                
+                nodeIndex++;
+                positionIndex++;
             }
-            while (IsTooClose(position, positions, config.nodeSpacing) && attempts < 100);
-            
-            positions.Add(position);
-            
-            GameObject nodeObj = Instantiate(letterNodePrefab, position, Quaternion.identity, arenaParent);
-            nodeObj.name = "Node_" + alphabet[i];
-            
-            LetterNode node = nodeObj.GetComponent<LetterNode>();
-            node.Initialize(alphabet[i]);
-            letterNodes.Add(node);
         }
     }
     
@@ -114,7 +155,7 @@ public class GameManager : MonoBehaviour
             actorsParent = actorsObj.transform;
         }
         
-        Vector3 spawnPos = new Vector3(0, 1, -config.arenaSize / 3f);
+        Vector3 spawnPos = new Vector3(0, 1, -config.arenaHeight / 3f);
         GameObject playerObj = Instantiate(playerPrefab, spawnPos, Quaternion.identity, actorsParent);
         playerObj.name = "Player";
         
@@ -129,7 +170,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < config.botCount; i++)
         {
             float angle = (i + 1) * (360f / (config.botCount + 1)) * Mathf.Deg2Rad;
-            float radius = config.arenaSize / 3f;
+            float radius = Mathf.Max(config.arenaWidth, config.arenaHeight) / 3f;
             Vector3 spawnPos = new Vector3(
                 Mathf.Cos(angle) * radius,
                 1,

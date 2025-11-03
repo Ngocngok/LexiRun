@@ -13,6 +13,9 @@ public class GameConfig : ScriptableObject
     public float botMoveSpeed = 4f;
     public int botMistakeLimit = 3;
     public float botReplanInterval = 2f;
+    public bool botAvoidWrongNodes = true;
+    public float botAvoidanceRadius = 1.5f;
+    public float botAvoidanceSmoothSpeed = 5f;
     
     [Header("Penalty Settings")]
     public float timeDeductionAtZeroProgress = 5f;
@@ -24,8 +27,12 @@ public class GameConfig : ScriptableObject
     public float touchCooldown = 0.5f;
     
     [Header("Arena Settings")]
-    public float arenaSize = 30f;
-    public float nodeSpacing = 2f;
+    public float arenaWidth = 30f;
+    public float arenaHeight = 40f;
+    public int arenaColumns = 4;
+    public int arenaRows = 7;
+    public float nodeRandomOffsetMin = 0.3f;
+    public float nodeRandomOffsetMax = 0.5f;
     
     [Header("Floating Word Display Settings")]
     public float floatingTextHeight = 2f;
