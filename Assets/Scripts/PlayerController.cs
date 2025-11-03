@@ -54,12 +54,32 @@ public class PlayerController : ActorController
             return;
         }
         
+        // Rotate character model if moving
+        if (animationController != null && moveInput.magnitude > 0.01f)
+        {
+            animationController.RotateTowards(moveInput);
+        }
+        
         Move(moveInput);
     }
     
     public void SetMoveInput(Vector2 input)
     {
         moveInput = new Vector3(input.x, 0, input.y);
+        
+        // Set animation based on input
+        if (animationController != null)
+        {
+            if (input.magnitude > 0.1f)
+            {
+                animationController.SetWalk();
+                animationController.RotateTowards(moveInput);
+            }
+            else
+            {
+                animationController.SetIdle();
+            }
+        }
     }
     
     protected override void OnWrongTouch(LetterNode node)

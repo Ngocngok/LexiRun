@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerStartingHP: 3
   playerStartingTime: 60
-  playerMoveSpeed: 5
+  playerMoveSpeed: 4
   botCount: 3
-  botMoveSpeed: 4
+  botMoveSpeed: 3
   botMistakeLimit: 3
   botReplanInterval: 2
   botAvoidWrongNodes: 1
@@ -27,8 +27,10 @@ MonoBehaviour:
   wordsToWin: 3
   wordCompletionDelay: 1
   touchCooldown: 0.5
-  arenaSize: 40
-  nodeSpacing: 2
+  arenaWidth: 30
+  arenaHeight: 40
+  arenaColumns: 4
+  arenaRows: 7
   nodeRandomOffsetMin: 0.2
   nodeRandomOffsetMax: 1
   floatingTextHeight: 2

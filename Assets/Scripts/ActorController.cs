@@ -13,11 +13,13 @@ public abstract class ActorController : MonoBehaviour
     protected Rigidbody rb;
     protected float moveSpeed;
     protected FloatingWordDisplay floatingWordDisplay;
+    protected CharacterAnimationController animationController;
     
     protected virtual void Start()
     {
         rb = GetComponent<Rigidbody>();
         gameManager = GameManager.Instance;
+        animationController = GetComponentInChildren<CharacterAnimationController>();
         
         // Set actor color
         MeshRenderer renderer = GetComponentInChildren<MeshRenderer>();

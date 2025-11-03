@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public GameConfig config;
     public GameObject letterNodePrefab;
     public GameObject playerPrefab;
-    public GameObject botPrefab;
+    public GameObject[] botPrefabs; // Array of different bot prefabs
     
     public Transform arenaParent;
     public Transform actorsParent;
@@ -177,7 +177,12 @@ public class GameManager : MonoBehaviour
                 Mathf.Sin(angle) * radius
             );
             
-            GameObject botObj = Instantiate(botPrefab, spawnPos, Quaternion.identity, actorsParent);
+            // Use different bot prefab for each bot
+            GameObject botPrefabToUse = (botPrefabs != null && botPrefabs.Length > i) 
+                ? botPrefabs[i] 
+                : botPrefabs[0];
+            
+            GameObject botObj = Instantiate(botPrefabToUse, spawnPos, Quaternion.identity, actorsParent);
             botObj.name = "Bot_" + (i + 1);
             
             BotController bot = botObj.GetComponent<BotController>();

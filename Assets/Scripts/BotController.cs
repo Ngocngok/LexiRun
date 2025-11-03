@@ -74,7 +74,21 @@ public class BotController : ActorController
                 direction = (direction.normalized + smoothedAvoidanceDirection * 1.5f).normalized;
             }
             
+            // Rotate character model towards movement direction
+            if (animationController != null && direction.magnitude > 0.01f)
+            {
+                animationController.RotateTowards(direction);
+            }
+            
             Move(direction.normalized);
+        }
+        else
+        {
+            // No target, set idle
+            if (animationController != null)
+            {
+                animationController.SetIdle();
+            }
         }
     }
     
@@ -82,6 +96,10 @@ public class BotController : ActorController
     {
         if (wordProgress.currentWord == null || wordProgress.currentWord.Length == 0)
         {
+            if (animationController != null)
+            {
+                animationController.SetIdle();
+            }
             return;
         }
         
@@ -98,6 +116,10 @@ public class BotController : ActorController
         
         if (targetLetter == '\0')
         {
+            if (animationController != null)
+            {
+                animationController.SetIdle();
+            }
             return;
         }
         
@@ -120,6 +142,12 @@ public class BotController : ActorController
         }
         
         targetNode = closestNode;
+        
+        // Set walk animation when we have a target
+        if (targetNode != null && animationController != null)
+        {
+            animationController.SetWalk();
+        }
     }
     
     private bool IsTargetValid()
