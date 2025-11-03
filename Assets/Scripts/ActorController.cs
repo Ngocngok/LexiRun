@@ -108,6 +108,12 @@ public abstract class ActorController : MonoBehaviour
             floatingWordDisplay.UpdateWord(wordProgress);
         }
         
+        // Play correct letter sound
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayCorrectLetter();
+        }
+        
         if (wordProgress.IsComplete())
         {
             OnWordCompleted();
@@ -122,6 +128,12 @@ public abstract class ActorController : MonoBehaviour
     protected virtual void OnWordCompleted()
     {
         completedWords++;
+        
+        // Play word complete sound
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayWordComplete();
+        }
         
         if (completedWords >= gameManager.config.wordsToWin)
         {

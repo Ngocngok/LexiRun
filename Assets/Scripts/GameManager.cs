@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     
     public GameConfig config;
+    public LevelConfig levelConfig;
     public GameObject letterNodePrefab;
     public GameObject playerPrefab;
     public GameObject[] botPrefabs; // Array of different bot prefabs
@@ -23,6 +24,8 @@ public class GameManager : MonoBehaviour
     private List<string> usedWords = new List<string>();
     
     private UIManager uiManager;
+    private int currentLevel = 1;
+    private DifficultySettings currentDifficulty;
     
     void Awake()
     {
@@ -39,18 +42,65 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         uiManager = FindFirstObjectByType<UIManager>();
+        
+        // Get current level from scene transition or settings
+        if (SceneTransitionManager.Instance != null)
+        {
+            currentLevel = SceneTransitionManager.Instance.GetLevelToLoad();
+        }
+        else
+        {
+            currentLevel = SettingsManager.GetCurrentLevel();
+        }
+        
+        // Get difficulty settings for this level
+        if (levelConfig != null)
+        {
+            currentDifficulty = levelConfig.GetSettingsForLevel(currentLevel);
+        }
+        
         InitializeGame();
     }
     
     void InitializeGame()
     {
-        availableWords = new List<string>(config.wordList);
+        // Filter words based on difficulty
+        FilterWordsByDifficulty();
         
         CreateArena();
         CreatePlayer();
         CreateBots();
         
         StartGame();
+        
+        // Play gameplay music
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayMusic(AudioManager.Instance.gameplayMusic);
+        }
+    }
+    
+    void FilterWordsByDifficulty()
+    {
+        availableWords.Clear();
+        
+        if (currentDifficulty != null)
+        {
+            foreach (string word in config.wordList)
+            {
+                if (word.Length >= currentDifficulty.minWordLength && 
+                    word.Length <= currentDifficulty.maxWordLength)
+                {
+                    availableWords.Add(word);
+                }
+            }
+        }
+        
+        if (availableWords.Count == 0)
+        {
+            // Fallback to all words if no words match
+            availableWords = new List<string>(config.wordList);
+        }
     }
     
     void CreateArena()
@@ -160,12 +210,19 @@ public class GameManager : MonoBehaviour
         playerObj.name = "Player";
         
         player = playerObj.GetComponent<PlayerController>();
+        
+        // Use difficulty-based time limit
+        float timeLimit = currentDifficulty != null ? currentDifficulty.timeLimit : config.playerStartingTime;
         player.Initialize(0, "Player", Color.green, config.playerMoveSpeed);
+        player.currentTime = timeLimit;
     }
     
     void CreateBots()
     {
         Color[] botColors = { Color.red, Color.blue, Color.yellow, Color.magenta };
+        
+        // Use difficulty-based bot speed
+        float botSpeed = currentDifficulty != null ? currentDifficulty.botSpeed : config.botMoveSpeed;
         
         for (int i = 0; i < config.botCount; i++)
         {
@@ -186,7 +243,14 @@ public class GameManager : MonoBehaviour
             botObj.name = "Bot_" + (i + 1);
             
             BotController bot = botObj.GetComponent<BotController>();
-            bot.Initialize(i + 1, "Bot " + (i + 1), botColors[i % botColors.Length], config.botMoveSpeed);
+            bot.Initialize(i + 1, "Bot " + (i + 1), botColors[i % botColors.Length], botSpeed);
+            
+            // Set difficulty settings for bot
+            if (currentDifficulty != null)
+            {
+                bot.SetDifficultySettings(currentDifficulty);
+            }
+            
             bots.Add(bot);
         }
     }
@@ -239,16 +303,29 @@ public class GameManager : MonoBehaviour
         
         if (actor == player)
         {
+            // Player won - unlock next level
+            SettingsManager.UnlockNextLevel();
+            
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlayGameWin();
+            }
+            
             if (uiManager != null)
             {
-                uiManager.ShowGameOver(true, "You Won!");
+                uiManager.ShowVictoryScreen(currentLevel);
             }
         }
         else
         {
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlayGameLose();
+            }
+            
             if (uiManager != null)
             {
-                uiManager.ShowGameOver(false, actor.actorName + " won!");
+                uiManager.ShowLoseScreen(actor.actorName + " won!");
             }
         }
     }
@@ -260,9 +337,14 @@ public class GameManager : MonoBehaviour
         gameActive = false;
         player.isEliminated = true;
         
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayGameLose();
+        }
+        
         if (uiManager != null)
         {
-            uiManager.ShowGameOver(false, "You Lost! " + reason);
+            uiManager.ShowLoseScreen(reason);
         }
     }
     

@@ -13,10 +13,17 @@ public class UIManager : MonoBehaviour
     public Transform botInfoParent;
     public GameObject botInfoPrefab;
     
-    [Header("Game Over")]
-    public GameObject gameOverPanel;
-    public Text gameOverText;
-    public Button restartButton;
+    [Header("Victory Screen")]
+    public GameObject victoryPanel;
+    public Text victoryText;
+    public Button nextLevelButton;
+    public Button victoryHomeButton;
+    
+    [Header("Lose Screen")]
+    public GameObject losePanel;
+    public Text loseText;
+    public Button retryButton;
+    public Button loseHomeButton;
     
     private PlayerController player;
     private List<BotController> bots;
@@ -24,14 +31,34 @@ public class UIManager : MonoBehaviour
     
     void Start()
     {
-        if (gameOverPanel != null)
+        if (victoryPanel != null)
         {
-            gameOverPanel.SetActive(false);
+            victoryPanel.SetActive(false);
         }
         
-        if (restartButton != null)
+        if (losePanel != null)
         {
-            restartButton.onClick.AddListener(OnRestartClicked);
+            losePanel.SetActive(false);
+        }
+        
+        if (nextLevelButton != null)
+        {
+            nextLevelButton.onClick.AddListener(OnNextLevelClicked);
+        }
+        
+        if (victoryHomeButton != null)
+        {
+            victoryHomeButton.onClick.AddListener(OnHomeClicked);
+        }
+        
+        if (retryButton != null)
+        {
+            retryButton.onClick.AddListener(OnRetryClicked);
+        }
+        
+        if (loseHomeButton != null)
+        {
+            loseHomeButton.onClick.AddListener(OnHomeClicked);
         }
     }
     
@@ -106,23 +133,69 @@ public class UIManager : MonoBehaviour
         }
     }
     
-    public void ShowGameOver(bool won, string message)
+    public void ShowVictoryScreen(int completedLevel)
     {
-        if (gameOverPanel != null)
+        if (victoryPanel != null)
         {
-            gameOverPanel.SetActive(true);
+            victoryPanel.SetActive(true);
         }
         
-        if (gameOverText != null)
+        if (victoryText != null)
         {
-            gameOverText.text = message;
-            gameOverText.color = won ? Color.green : Color.red;
+            victoryText.text = "Level " + completedLevel + " Complete!\nYou Won!";
         }
     }
     
-    void OnRestartClicked()
+    public void ShowLoseScreen(string reason)
     {
-        GameManager.Instance.RestartGame();
+        if (losePanel != null)
+        {
+            losePanel.SetActive(true);
+        }
+        
+        if (loseText != null)
+        {
+            loseText.text = "You Lost!\n" + reason;
+        }
+    }
+    
+    void OnNextLevelClicked()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayButtonClick();
+        }
+        
+        int nextLevel = SettingsManager.GetCurrentLevel();
+        if (SceneTransitionManager.Instance != null)
+        {
+            SceneTransitionManager.Instance.LoadGameplayScene(nextLevel);
+        }
+    }
+    
+    void OnRetryClicked()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayButtonClick();
+        }
+        
+        UnityEngine.SceneManagement.SceneManager.LoadScene(
+            UnityEngine.SceneManagement.SceneManager.GetActiveScene().name
+        );
+    }
+    
+    void OnHomeClicked()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayButtonClick();
+        }
+        
+        if (SceneTransitionManager.Instance != null)
+        {
+            SceneTransitionManager.Instance.LoadHomeScene();
+        }
     }
 }
 

@@ -8,6 +8,10 @@ public class BotController : ActorController
     private float replanTimer;
     private Vector3 smoothedAvoidanceDirection;
     
+    private bool isPaused = false;
+    private float pauseTimer = 0f;
+    private DifficultySettings difficultySettings;
+    
     protected override void Start()
     {
         base.Start();
@@ -31,10 +35,32 @@ public class BotController : ActorController
         }
     }
     
+    public void SetDifficultySettings(DifficultySettings settings)
+    {
+        difficultySettings = settings;
+    }
+    
     void Update()
     {
         if (isEliminated || !gameManager.IsGameActive())
         {
+            return;
+        }
+        
+        // Handle pause timer
+        if (isPaused)
+        {
+            pauseTimer -= Time.deltaTime;
+            if (pauseTimer <= 0)
+            {
+                isPaused = false;
+                
+                // Resume walking
+                if (animationController != null && targetNode != null)
+                {
+                    animationController.SetWalk();
+                }
+            }
             return;
         }
         
@@ -48,7 +74,7 @@ public class BotController : ActorController
     
     void FixedUpdate()
     {
-        if (isEliminated || !gameManager.IsGameActive())
+        if (isEliminated || !gameManager.IsGameActive() || isPaused)
         {
             return;
         }
@@ -234,6 +260,24 @@ public class BotController : ActorController
         }
         
         return avoidance;
+    }
+    
+    protected override void OnCorrectTouch(LetterNode node)
+    {
+        base.OnCorrectTouch(node);
+        
+        // Random chance to pause after touching correct letter
+        if (difficultySettings != null && Random.value < difficultySettings.botPauseChance)
+        {
+            isPaused = true;
+            pauseTimer = Random.Range(difficultySettings.botPauseMinDuration, difficultySettings.botPauseMaxDuration);
+            
+            // Set idle animation during pause
+            if (animationController != null)
+            {
+                animationController.SetIdle();
+            }
+        }
     }
     
     protected override void OnWordAssigned(string word)

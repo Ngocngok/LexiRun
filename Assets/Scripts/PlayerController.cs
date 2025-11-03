@@ -86,6 +86,12 @@ public class PlayerController : ActorController
     {
         base.OnWrongTouch(node);
         
+        // Play wrong letter sound
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayWrongLetter();
+        }
+        
         int progress = wordProgress.GetProgress();
         
         if (progress > 0)
