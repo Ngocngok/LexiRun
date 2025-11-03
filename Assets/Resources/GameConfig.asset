@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a58aea26742894d4cbc10c139f949522, type: 3}
+  m_Name: GameConfig
+  m_EditorClassIdentifier: 
+  playerStartingHP: 3
+  playerStartingTime: 60
+  playerMoveSpeed: 5
+  botCount: 3
+  botMoveSpeed: 4
+  botMistakeLimit: 3
+  botReplanInterval: 2
+  timeDeductionAtZeroProgress: 5
+  hpLossAmount: 1
+  wordsToWin: 3
+  wordCompletionDelay: 1
+  touchCooldown: 0.5
+  arenaSize: 30
+  nodeSpacing: 2
+  wordList:
+  - APPLE
+  - BREAD
+  - CHAIR
+  - DANCE
+  - EAGLE
+  - FLAME
+  - GRAPE
+  - HOUSE
+  - IMAGE
+  - JUICE
+  - KNIFE
+  - LEMON
+  - MOUSE
+  - NIGHT
+  - OCEAN
+  - PIANO
+  - QUEEN
+  - RIVER
+  - STONE
+  - TIGER
+  - UNCLE
+  - VOICE
+  - WATER
+  - XENON
+  - YOUTH
+  - ZEBRA
