@@ -27,6 +27,14 @@ public class GameConfig : ScriptableObject
     public float arenaSize = 30f;
     public float nodeSpacing = 2f;
     
+    [Header("Floating Word Display Settings")]
+    public float floatingTextHeight = 2f;
+    public float floatingTextLetterSpacing = 0.5f;
+    public int playerFloatingTextSize = 60;
+    public int botFloatingTextSize = 40;
+    public Color unfilledLetterColor = Color.white;
+    public Color filledLetterColor = Color.blue;
+    
     [Header("Word Lists")]
     public string[] wordList = new string[]
     {

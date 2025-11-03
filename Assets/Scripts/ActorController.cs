@@ -12,6 +12,7 @@ public abstract class ActorController : MonoBehaviour
     protected GameManager gameManager;
     protected Rigidbody rb;
     protected float moveSpeed;
+    protected FloatingWordDisplay floatingWordDisplay;
     
     protected virtual void Start()
     {
@@ -24,6 +25,9 @@ public abstract class ActorController : MonoBehaviour
         {
             renderer.material.color = actorColor;
         }
+        
+        // Create floating word display
+        CreateFloatingWordDisplay();
     }
     
     public virtual void Initialize(int id, string name, Color color, float speed)
@@ -40,9 +44,24 @@ public abstract class ActorController : MonoBehaviour
         }
     }
     
+    protected virtual void CreateFloatingWordDisplay()
+    {
+        GameObject floatingTextObj = new GameObject("FloatingWordDisplay");
+        floatingTextObj.transform.SetParent(transform);
+        floatingTextObj.transform.localPosition = Vector3.zero;
+        
+        floatingWordDisplay = floatingTextObj.AddComponent<FloatingWordDisplay>();
+    }
+    
     public void AssignWord(string word)
     {
         wordProgress.SetWord(word);
+        
+        if (floatingWordDisplay != null)
+        {
+            floatingWordDisplay.UpdateWord(wordProgress);
+        }
+        
         OnWordAssigned(word);
     }
     
@@ -81,6 +100,11 @@ public abstract class ActorController : MonoBehaviour
     protected virtual void OnCorrectTouch(LetterNode node)
     {
         wordProgress.FillLetter(node.letter);
+        
+        if (floatingWordDisplay != null)
+        {
+            floatingWordDisplay.UpdateWord(wordProgress);
+        }
         
         if (wordProgress.IsComplete())
         {

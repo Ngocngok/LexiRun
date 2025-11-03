@@ -70,7 +70,7 @@ public class UIManager : MonoBehaviour
     {
         if (playerWordText != null)
         {
-            playerWordText.text = "Word: " + player.wordProgress.GetDisplayString();
+            playerWordText.text = "Your Word: " + player.wordProgress.currentWord;
         }
         
         if (playerHPText != null)
@@ -158,9 +158,10 @@ public class BotInfoUI : MonoBehaviour
             return;
         }
         
+        // Hide word text since it's now floating above the bot
         if (botWordText != null)
         {
-            botWordText.text = bot.wordProgress.GetDisplayString();
+            botWordText.text = "";
         }
         
         if (botMistakesText != null)

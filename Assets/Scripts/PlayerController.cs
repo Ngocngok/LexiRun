@@ -14,6 +14,23 @@ public class PlayerController : ActorController
         currentTime = gameManager.config.playerStartingTime;
     }
     
+    protected override void CreateFloatingWordDisplay()
+    {
+        base.CreateFloatingWordDisplay();
+        
+        if (floatingWordDisplay != null && gameManager != null)
+        {
+            floatingWordDisplay.Initialize(
+                transform,
+                wordProgress,
+                gameManager.config.floatingTextHeight,
+                gameManager.config.playerFloatingTextSize,
+                gameManager.config.unfilledLetterColor,
+                gameManager.config.filledLetterColor
+            );
+        }
+    }
+    
     void Update()
     {
         if (isEliminated || !gameManager.IsGameActive())
@@ -55,6 +72,12 @@ public class PlayerController : ActorController
         {
             // Remove last filled letter and decrease HP
             wordProgress.RemoveLastFilledLetter();
+            
+            if (floatingWordDisplay != null)
+            {
+                floatingWordDisplay.UpdateWord(wordProgress);
+            }
+            
             currentHP -= gameManager.config.hpLossAmount;
             
             if (currentHP <= 0)

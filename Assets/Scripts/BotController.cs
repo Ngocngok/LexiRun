@@ -13,6 +13,23 @@ public class BotController : ActorController
         replanTimer = Random.Range(0f, gameManager.config.botReplanInterval);
     }
     
+    protected override void CreateFloatingWordDisplay()
+    {
+        base.CreateFloatingWordDisplay();
+        
+        if (floatingWordDisplay != null && gameManager != null)
+        {
+            floatingWordDisplay.Initialize(
+                transform,
+                wordProgress,
+                gameManager.config.floatingTextHeight,
+                gameManager.config.botFloatingTextSize,
+                gameManager.config.unfilledLetterColor,
+                gameManager.config.filledLetterColor
+            );
+        }
+    }
+    
     void Update()
     {
         if (isEliminated || !gameManager.IsGameActive())
