@@ -269,6 +269,12 @@ public class GameManager : MonoBehaviour
         if (uiManager != null)
         {
             uiManager.Initialize(player, bots);
+            
+            // Show tutorial if this is Level 1 and tutorial hasn't been completed
+            if (currentLevel == 1 && !SettingsManager.GetTutorialCompleted())
+            {
+                uiManager.ShowTutorial();
+            }
         }
     }
     

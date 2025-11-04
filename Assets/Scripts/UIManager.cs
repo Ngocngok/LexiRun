@@ -31,7 +31,20 @@ public class UIManager : MonoBehaviour
     public Button pauseResumeButton;
     public Button pauseHomeButton;
     
+    [Header("Tutorial")]
+    public GameObject tutorialPanel;
+    public GameObject tutorialSlide1;
+    public GameObject tutorialSlide2;
+    public GameObject tutorialSlide3;
+    public Image tutorialImage1;
+    public Image tutorialImage2;
+    public Image tutorialImage3;
+    public Button tutorialNextButton1;
+    public Button tutorialNextButton2;
+    public Button tutorialOKButton;
+    
     private PlayerController player;
+    private int currentTutorialSlide = 1;
     private List<BotController> bots;
     private Dictionary<BotController, BotInfoUI> botInfoUIs = new Dictionary<BotController, BotInfoUI>();
     
@@ -85,6 +98,27 @@ public class UIManager : MonoBehaviour
         if (pausePanel != null)
         {
             pausePanel.SetActive(false);
+        }
+        
+        // Setup tutorial buttons
+        if (tutorialNextButton1 != null)
+        {
+            tutorialNextButton1.onClick.AddListener(OnTutorialNext1);
+        }
+        
+        if (tutorialNextButton2 != null)
+        {
+            tutorialNextButton2.onClick.AddListener(OnTutorialNext2);
+        }
+        
+        if (tutorialOKButton != null)
+        {
+            tutorialOKButton.onClick.AddListener(OnTutorialOK);
+        }
+        
+        if (tutorialPanel != null)
+        {
+            tutorialPanel.SetActive(false);
         }
     }
     
@@ -280,6 +314,82 @@ public class UIManager : MonoBehaviour
         {
             pausePanel.SetActive(false);
         }
+    }
+    
+    // Tutorial Methods
+    public void ShowTutorial()
+    {
+        if (tutorialPanel != null)
+        {
+            currentTutorialSlide = 1;
+            tutorialPanel.SetActive(true);
+            ShowTutorialSlide(1);
+            
+            // Pause game during tutorial
+            Time.timeScale = 0f;
+        }
+    }
+    
+    private void ShowTutorialSlide(int slideNumber)
+    {
+        // Hide all slides
+        if (tutorialSlide1 != null) tutorialSlide1.SetActive(false);
+        if (tutorialSlide2 != null) tutorialSlide2.SetActive(false);
+        if (tutorialSlide3 != null) tutorialSlide3.SetActive(false);
+        
+        // Show requested slide
+        switch (slideNumber)
+        {
+            case 1:
+                if (tutorialSlide1 != null) tutorialSlide1.SetActive(true);
+                break;
+            case 2:
+                if (tutorialSlide2 != null) tutorialSlide2.SetActive(true);
+                break;
+            case 3:
+                if (tutorialSlide3 != null) tutorialSlide3.SetActive(true);
+                break;
+        }
+        
+        currentTutorialSlide = slideNumber;
+    }
+    
+    void OnTutorialNext1()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayButtonClick();
+        }
+        ShowTutorialSlide(2);
+    }
+    
+    void OnTutorialNext2()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayButtonClick();
+        }
+        ShowTutorialSlide(3);
+    }
+    
+    void OnTutorialOK()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayButtonClick();
+        }
+        
+        // Hide tutorial
+        if (tutorialPanel != null)
+        {
+            tutorialPanel.SetActive(false);
+        }
+        
+        // Mark tutorial as completed
+        SettingsManager.SetTutorialCompleted(true);
+        
+        // Resume game
+        Time.timeScale = 1f;
     }
 }
 

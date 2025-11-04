@@ -6,6 +6,7 @@ public static class SettingsManager
     private const string SFX_KEY = "SFXEnabled";
     private const string VIBRATION_KEY = "VibrationEnabled";
     private const string CURRENT_LEVEL_KEY = "CurrentLevel";
+    private const string TUTORIAL_COMPLETED_KEY = "TutorialCompleted";
     
     // Music Settings
     public static bool GetMusicEnabled()
@@ -64,5 +65,17 @@ public static class SettingsManager
     public static void ResetProgress()
     {
         SetCurrentLevel(1);
+    }
+    
+    // Tutorial Settings
+    public static bool GetTutorialCompleted()
+    {
+        return PlayerPrefs.GetInt(TUTORIAL_COMPLETED_KEY, 0) == 1;
+    }
+    
+    public static void SetTutorialCompleted(bool completed)
+    {
+        PlayerPrefs.SetInt(TUTORIAL_COMPLETED_KEY, completed ? 1 : 0);
+        PlayerPrefs.Save();
     }
 }
