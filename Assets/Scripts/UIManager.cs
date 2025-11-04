@@ -25,6 +25,12 @@ public class UIManager : MonoBehaviour
     public Button retryButton;
     public Button loseHomeButton;
     
+    [Header("Pause Screen")]
+    public Button pauseButton;
+    public GameObject pausePanel;
+    public Button pauseResumeButton;
+    public Button pauseHomeButton;
+    
     private PlayerController player;
     private List<BotController> bots;
     private Dictionary<BotController, BotInfoUI> botInfoUIs = new Dictionary<BotController, BotInfoUI>();
@@ -59,6 +65,26 @@ public class UIManager : MonoBehaviour
         if (loseHomeButton != null)
         {
             loseHomeButton.onClick.AddListener(OnHomeClicked);
+        }
+        
+        if (pauseButton != null)
+        {
+            pauseButton.onClick.AddListener(OnPauseClicked);
+        }
+        
+        if (pauseResumeButton != null)
+        {
+            pauseResumeButton.onClick.AddListener(OnResumeClicked);
+        }
+        
+        if (pauseHomeButton != null)
+        {
+            pauseHomeButton.onClick.AddListener(OnPauseHomeClicked);
+        }
+        
+        if (pausePanel != null)
+        {
+            pausePanel.SetActive(false);
         }
     }
     
@@ -195,6 +221,64 @@ public class UIManager : MonoBehaviour
         if (SceneTransitionManager.Instance != null)
         {
             SceneTransitionManager.Instance.LoadHomeScene();
+        }
+    }
+    
+    void OnPauseClicked()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayButtonClick();
+        }
+        
+        PauseGame();
+    }
+    
+    void OnResumeClicked()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayButtonClick();
+        }
+        
+        ResumeGame();
+    }
+    
+    void OnPauseHomeClicked()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayButtonClick();
+        }
+        
+        // Resume game before going home (to reset Time.timeScale)
+        ResumeGame();
+        
+        if (SceneTransitionManager.Instance != null)
+        {
+            SceneTransitionManager.Instance.LoadHomeScene();
+        }
+    }
+    
+    public void PauseGame()
+    {
+        Time.timeScale = 0f; // Pause game
+        
+        if (pausePanel != null)
+        {
+            pausePanel.SetActive(true);
+        }
+        
+        // Note: Music continues playing (not affected by Time.timeScale)
+    }
+    
+    public void ResumeGame()
+    {
+        Time.timeScale = 1f; // Resume game
+        
+        if (pausePanel != null)
+        {
+            pausePanel.SetActive(false);
         }
     }
 }

@@ -108,8 +108,8 @@ public abstract class ActorController : MonoBehaviour
             floatingWordDisplay.UpdateWord(wordProgress);
         }
         
-        // Play correct letter sound
-        if (AudioManager.Instance != null)
+        // Play correct letter sound only for player
+        if (AudioManager.Instance != null && this is PlayerController)
         {
             AudioManager.Instance.PlayCorrectLetter();
         }
@@ -129,8 +129,8 @@ public abstract class ActorController : MonoBehaviour
     {
         completedWords++;
         
-        // Play word complete sound
-        if (AudioManager.Instance != null)
+        // Play word complete sound only for player
+        if (AudioManager.Instance != null && this is PlayerController)
         {
             AudioManager.Instance.PlayWordComplete();
         }

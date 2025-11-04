@@ -190,12 +190,6 @@ public class BotController : ActorController
     {
         base.OnWrongTouch(node);
         
-        // Play wrong letter sound
-        if (AudioManager.Instance != null)
-        {
-            AudioManager.Instance.PlayWrongLetter();
-        }
-        
         mistakeCount++;
         
         if (mistakeCount >= gameManager.config.botMistakeLimit)
