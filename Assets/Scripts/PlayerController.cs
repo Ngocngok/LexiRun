@@ -4,6 +4,8 @@ public class PlayerController : ActorController
 {
     public float currentHP;
     public float currentTime;
+    public ParticleSystem collectLetterFX;
+    public ParticleSystem collectWordFX;
     
     private Vector3 moveInput;
     
@@ -81,7 +83,19 @@ public class PlayerController : ActorController
             }
         }
     }
-    
+
+    protected override void OnWordCompleted()
+    {
+        base.OnWordCompleted();
+        collectWordFX.Play(true);
+    }
+
+    protected override void OnCorrectTouch(LetterNode node)
+    {
+        base.OnCorrectTouch(node);
+        collectLetterFX.Play(true);  
+    }
+
     protected override void OnWrongTouch(LetterNode node)
     {
         base.OnWrongTouch(node);

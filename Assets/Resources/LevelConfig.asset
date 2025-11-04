@@ -17,10 +17,10 @@ MonoBehaviour:
     minWordLength: 3
     maxWordLength: 3
     timeLimit: 180
-    botSpeed: 3.5
-    botPauseChance: 0.7
-    botPauseMinDuration: 1
-    botPauseMaxDuration: 2
+    botSpeed: 3
+    botPauseChance: 0.8
+    botPauseMinDuration: 3
+    botPauseMaxDuration: 6
   normalSettings:
     difficultyName: Normal
     minWordLength: 4

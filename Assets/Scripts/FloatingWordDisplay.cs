@@ -130,7 +130,8 @@ public class FloatingWordDisplay : MonoBehaviour
         // Billboard effect - face camera
         if (mainCamera != null)
         {
-            transform.rotation = Quaternion.LookRotation(transform.position - mainCamera.transform.position);
+            //transform.rotation = Quaternion.LookRotation(transform.position - mainCamera.transform.position);
+            transform.forward = mainCamera.transform.forward ;
         }
         
         UpdateDisplay();
