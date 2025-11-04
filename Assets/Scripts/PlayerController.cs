@@ -94,33 +94,26 @@ public class PlayerController : ActorController
         
         int progress = wordProgress.GetProgress();
         
-        if (progress > 0)
+        // Always deduct HP
+        currentHP -= gameManager.config.hpLossAmount;
+        
+        // If no letters collected, also deduct time
+        if (progress == 0)
         {
-            // Remove last filled letter and decrease HP
-            wordProgress.RemoveLastFilledLetter();
-            
-            if (floatingWordDisplay != null)
-            {
-                floatingWordDisplay.UpdateWord(wordProgress);
-            }
-            
-            currentHP -= gameManager.config.hpLossAmount;
-            
-            if (currentHP <= 0)
-            {
-                currentHP = 0;
-                gameManager.OnPlayerLost("HP reached zero!");
-            }
-        }
-        else
-        {
-            // Deduct time
             currentTime -= gameManager.config.timeDeductionAtZeroProgress;
             if (currentTime <= 0)
             {
                 currentTime = 0;
                 gameManager.OnPlayerLost("Time ran out!");
+                return;
             }
+        }
+        
+        // Check if HP reached zero
+        if (currentHP <= 0)
+        {
+            currentHP = 0;
+            gameManager.OnPlayerLost("HP reached zero!");
         }
     }
 }
