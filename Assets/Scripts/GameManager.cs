@@ -144,7 +144,7 @@ public class GameManager : MonoBehaviour
                 // Calculate grid position
                 Vector3 gridPosition = new Vector3(
                     startX + col * spacingX,
-                    0.5f,
+                    0f,
                     startZ + row * spacingZ
                 );
                 

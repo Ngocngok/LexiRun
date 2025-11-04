@@ -16,7 +16,7 @@ MonoBehaviour:
     difficultyName: Easy
     minWordLength: 3
     maxWordLength: 3
-    timeLimit: 120
+    timeLimit: 180
     botSpeed: 3.5
     botPauseChance: 0.7
     botPauseMinDuration: 1
@@ -25,7 +25,7 @@ MonoBehaviour:
     difficultyName: Normal
     minWordLength: 4
     maxWordLength: 6
-    timeLimit: 100
+    timeLimit: 150
     botSpeed: 4
     botPauseChance: 0.4
     botPauseMinDuration: 0.5
@@ -34,7 +34,7 @@ MonoBehaviour:
     difficultyName: Hard
     minWordLength: 7
     maxWordLength: 10
-    timeLimit: 70
+    timeLimit: 130
     botSpeed: 4.5
     botPauseChance: 0
     botPauseMinDuration: 0

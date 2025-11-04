@@ -11,7 +11,7 @@ public class PlayerController : ActorController
     {
         base.Start();
         currentHP = gameManager.config.playerStartingHP;
-        currentTime = gameManager.config.playerStartingTime;
+        //currentTime = gameManager.config.playerStartingTime;
     }
     
     protected override void CreateFloatingWordDisplay()

@@ -202,7 +202,7 @@ public class UIManager : MonoBehaviour
         
         if (victoryText != null)
         {
-            victoryText.text = "Level " + completedLevel + " Complete!\nYou Won!";
+            victoryText.text = "VICTORY!";
         }
     }
     

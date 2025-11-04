@@ -36,7 +36,7 @@ public abstract class ActorController : MonoBehaviour
     {
         actorId = id;
         actorName = name;
-        actorColor = color;
+        //actorColor = color;
         moveSpeed = speed;
         
         MeshRenderer renderer = GetComponentInChildren<MeshRenderer>();
