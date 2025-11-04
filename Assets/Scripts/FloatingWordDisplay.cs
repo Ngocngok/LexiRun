@@ -12,6 +12,7 @@ public class FloatingWordDisplay : MonoBehaviour
     private Transform actorTransform;
     private Camera mainCamera;
     private WordProgress wordProgress;
+    private Font lilitaFont;
     
     public void Initialize(Transform actor, WordProgress progress, float height, int size, Color unfilled, Color filled)
     {
@@ -23,6 +24,14 @@ public class FloatingWordDisplay : MonoBehaviour
         filledColor = filled;
         
         mainCamera = Camera.main;
+        
+        // Load LilitaOne font
+        lilitaFont = Resources.Load<Font>("LilitaOne-Regular");
+        if (lilitaFont == null)
+        {
+            // Fallback: try to load from full path
+            lilitaFont = Resources.GetBuiltinResource<Font>("Arial.ttf");
+        }
         
         CreateLetterTexts();
     }
@@ -60,6 +69,17 @@ public class FloatingWordDisplay : MonoBehaviour
             textMesh.anchor = TextAnchor.MiddleCenter;
             textMesh.alignment = TextAlignment.Center;
             textMesh.characterSize = 0.1f;
+            
+            // Apply font if available
+            if (lilitaFont != null)
+            {
+                textMesh.font = lilitaFont;
+                MeshRenderer renderer = letterObj.GetComponent<MeshRenderer>();
+                if (renderer != null)
+                {
+                    renderer.material = lilitaFont.material;
+                }
+            }
             
             letterTexts[i] = textMesh;
         }

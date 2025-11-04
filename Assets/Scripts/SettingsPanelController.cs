@@ -3,44 +3,46 @@ using UnityEngine.UI;
 
 public class SettingsPanelController : MonoBehaviour
 {
-    public Toggle musicToggle;
-    public Toggle sfxToggle;
-    public Toggle vibrationToggle;
+    public Button musicButton;
+    public Button sfxButton;
+    public Button vibrationButton;
     public Button closeButton;
     
-    public Image musicOnImage;
-    public Image musicOffImage;
-    public Image sfxOnImage;
-    public Image sfxOffImage;
-    public Image vibrationOnImage;
-    public Image vibrationOffImage;
+    public Sprite musicOnSprite;
+    public Sprite musicOffSprite;
+    public Sprite sfxOnSprite;
+    public Sprite sfxOffSprite;
+    public Sprite vibrationOnSprite;
+    public Sprite vibrationOffSprite;
+    
+    private bool musicEnabled;
+    private bool sfxEnabled;
+    private bool vibrationEnabled;
     
     void Start()
     {
         // Load current settings
-        bool musicEnabled = SettingsManager.GetMusicEnabled();
-        bool sfxEnabled = SettingsManager.GetSFXEnabled();
-        bool vibrationEnabled = SettingsManager.GetVibrationEnabled();
+        musicEnabled = SettingsManager.GetMusicEnabled();
+        sfxEnabled = SettingsManager.GetSFXEnabled();
+        vibrationEnabled = SettingsManager.GetVibrationEnabled();
         
-        if (musicToggle != null)
+        // Setup button listeners
+        if (musicButton != null)
         {
-            musicToggle.isOn = musicEnabled;
-            musicToggle.onValueChanged.AddListener(OnMusicToggled);
-            UpdateMusicVisuals(musicEnabled);
+            musicButton.onClick.AddListener(OnMusicButtonClicked);
+            UpdateMusicVisuals();
         }
         
-        if (sfxToggle != null)
+        if (sfxButton != null)
         {
-            sfxToggle.isOn = sfxEnabled;
-            sfxToggle.onValueChanged.AddListener(OnSFXToggled);
-            UpdateSFXVisuals(sfxEnabled);
+            sfxButton.onClick.AddListener(OnSFXButtonClicked);
+            UpdateSFXVisuals();
         }
         
-        if (vibrationToggle != null)
+        if (vibrationButton != null)
         {
-            vibrationToggle.isOn = vibrationEnabled;
-            vibrationToggle.onValueChanged.AddListener(OnVibrationToggled);
-            UpdateVibrationVisuals(vibrationEnabled);
+            vibrationButton.onClick.AddListener(OnVibrationButtonClicked);
+            UpdateVibrationVisuals();
         }
         
         if (closeButton != null)
@@ -49,34 +51,37 @@ public class SettingsPanelController : MonoBehaviour
         }
     }
     
-    void OnMusicToggled(bool enabled)
+    void OnMusicButtonClicked()
     {
-        SettingsManager.SetMusicEnabled(enabled);
-        UpdateMusicVisuals(enabled);
+        musicEnabled = !musicEnabled;
+        SettingsManager.SetMusicEnabled(musicEnabled);
+        UpdateMusicVisuals();
         
         if (AudioManager.Instance != null)
         {
-            AudioManager.Instance.SetMusicEnabled(enabled);
+            AudioManager.Instance.SetMusicEnabled(musicEnabled);
             AudioManager.Instance.PlayButtonClick();
         }
     }
     
-    void OnSFXToggled(bool enabled)
+    void OnSFXButtonClicked()
     {
-        SettingsManager.SetSFXEnabled(enabled);
-        UpdateSFXVisuals(enabled);
+        sfxEnabled = !sfxEnabled;
+        SettingsManager.SetSFXEnabled(sfxEnabled);
+        UpdateSFXVisuals();
         
         if (AudioManager.Instance != null)
         {
-            AudioManager.Instance.SetSFXEnabled(enabled);
+            AudioManager.Instance.SetSFXEnabled(sfxEnabled);
             AudioManager.Instance.PlayButtonClick();
         }
     }
     
-    void OnVibrationToggled(bool enabled)
+    void OnVibrationButtonClicked()
     {
-        SettingsManager.SetVibrationEnabled(enabled);
-        UpdateVibrationVisuals(enabled);
+        vibrationEnabled = !vibrationEnabled;
+        SettingsManager.SetVibrationEnabled(vibrationEnabled);
+        UpdateVibrationVisuals();
         
         if (AudioManager.Instance != null)
         {
@@ -98,21 +103,39 @@ public class SettingsPanelController : MonoBehaviour
         }
     }
     
-    void UpdateMusicVisuals(bool enabled)
+    void UpdateMusicVisuals()
     {
-        if (musicOnImage != null) musicOnImage.gameObject.SetActive(enabled);
-        if (musicOffImage != null) musicOffImage.gameObject.SetActive(!enabled);
+        if (musicButton != null)
+        {
+            Image buttonImage = musicButton.GetComponent<Image>();
+            if (buttonImage != null)
+            {
+                buttonImage.sprite = musicEnabled ? musicOnSprite : musicOffSprite;
+            }
+        }
     }
     
-    void UpdateSFXVisuals(bool enabled)
+    void UpdateSFXVisuals()
     {
-        if (sfxOnImage != null) sfxOnImage.gameObject.SetActive(enabled);
-        if (sfxOffImage != null) sfxOffImage.gameObject.SetActive(!enabled);
+        if (sfxButton != null)
+        {
+            Image buttonImage = sfxButton.GetComponent<Image>();
+            if (buttonImage != null)
+            {
+                buttonImage.sprite = sfxEnabled ? sfxOnSprite : sfxOffSprite;
+            }
+        }
     }
     
-    void UpdateVibrationVisuals(bool enabled)
+    void UpdateVibrationVisuals()
     {
-        if (vibrationOnImage != null) vibrationOnImage.gameObject.SetActive(enabled);
-        if (vibrationOffImage != null) vibrationOffImage.gameObject.SetActive(!enabled);
+        if (vibrationButton != null)
+        {
+            Image buttonImage = vibrationButton.GetComponent<Image>();
+            if (buttonImage != null)
+            {
+                buttonImage.sprite = vibrationEnabled ? vibrationOnSprite : vibrationOffSprite;
+            }
+        }
     }
 }
