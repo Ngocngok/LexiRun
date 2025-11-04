@@ -308,6 +308,7 @@ public class GameManager : MonoBehaviour
             
             if (AudioManager.Instance != null)
             {
+                AudioManager.Instance.StopMusic();
                 AudioManager.Instance.PlayGameWin();
             }
             
@@ -320,6 +321,7 @@ public class GameManager : MonoBehaviour
         {
             if (AudioManager.Instance != null)
             {
+                AudioManager.Instance.StopMusic();
                 AudioManager.Instance.PlayGameLose();
             }
             
@@ -339,6 +341,7 @@ public class GameManager : MonoBehaviour
         
         if (AudioManager.Instance != null)
         {
+            AudioManager.Instance.StopMusic();
             AudioManager.Instance.PlayGameLose();
         }
         

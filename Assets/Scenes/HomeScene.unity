@@ -2352,14 +2352,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 0}
   sfxSource: {fileID: 0}
-  menuMusic: {fileID: 0}
-  gameplayMusic: {fileID: 0}
-  buttonClickSFX: {fileID: 0}
-  correctLetterSFX: {fileID: 0}
-  wrongLetterSFX: {fileID: 0}
-  wordCompleteSFX: {fileID: 0}
-  gameWinSFX: {fileID: 0}
-  gameLoseSFX: {fileID: 0}
+  menuMusic: {fileID: 8300000, guid: 59e4eabcc096a3547bbb3a7978f52bcd, type: 3}
+  gameplayMusic: {fileID: 8300000, guid: 40ce1ef98e078164e8671dfbb9e52f50, type: 3}
+  buttonClickSFX: {fileID: 8300000, guid: a23bb4fed0f388548a6458d9747de2ab, type: 3}
+  correctLetterSFX: {fileID: 8300000, guid: 18c7de83b6d3f7e46be89570963926bd, type: 3}
+  wrongLetterSFX: {fileID: 8300000, guid: 7357a000cb7dca1438ffdfdd9a3c8aae, type: 3}
+  wordCompleteSFX: {fileID: 8300000, guid: fac20430fc4b2c74683ba3870a219e9d, type: 3}
+  gameWinSFX: {fileID: 8300000, guid: 6f558db81bd36d045a4a928b412ef14f, type: 3}
+  gameLoseSFX: {fileID: 8300000, guid: 7bebf80e190511844bfa7837d9c8a5c1, type: 3}
 --- !u!1 &2140608420
 GameObject:
   m_ObjectHideFlags: 0
