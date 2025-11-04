@@ -14,6 +14,7 @@ public class SettingsPanelController : MonoBehaviour
     public Sprite sfxOffSprite;
     public Sprite vibrationOnSprite;
     public Sprite vibrationOffSprite;
+
     
     private bool musicEnabled;
     private bool sfxEnabled;

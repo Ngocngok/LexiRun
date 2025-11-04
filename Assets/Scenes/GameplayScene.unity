@@ -1576,7 +1576,7 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 48
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -2165,7 +2165,7 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 48
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -2419,7 +2419,7 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 48
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -4081,6 +4081,10 @@ MonoBehaviour:
   playerWordText: {fileID: 1787573753}
   playerHPText: {fileID: 0}
   playerTimerText: {fileID: 487840348}
+  hearts:
+  - {fileID: 1053106993}
+  - {fileID: 937276229}
+  - {fileID: 1615736580}
   botInfoParent: {fileID: 1803721299}
   botInfoPrefab: {fileID: 3145703592556146753, guid: 4904213ed769219499f6364a6b42bca2, type: 3}
   victoryPanel: {fileID: 1085100292}
@@ -4302,7 +4306,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5a350ac1f8e0a416499529612b3f7dab, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8ce7d0e9cb5184e2298eedeb3266e9be, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -4787,7 +4791,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -194}
+  m_AnchoredPosition: {x: 0, y: -221}
   m_SizeDelta: {x: 933.7, y: 117.7}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1787573753
@@ -4803,7 +4807,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.41553438, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4812,18 +4816,18 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: c16eb7d7c3953489db00312b8b09df4b, type: 3}
-    m_FontSize: 24
+    m_FontSize: 71
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 71
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Word: _ _ _ _ _'
+  m_Text: AMYSTERYWORD
 --- !u!222 &1787573754
 CanvasRenderer:
   m_ObjectHideFlags: 0

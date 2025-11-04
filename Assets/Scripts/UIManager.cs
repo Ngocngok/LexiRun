@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
     public Text playerWordText;
     public Text playerHPText;
     public Text playerTimerText;
+    public GameObject[] hearts;
     
     [Header("Bot Info")]
     public Transform botInfoParent;
@@ -157,18 +158,22 @@ public class UIManager : MonoBehaviour
     {
         if (playerWordText != null)
         {
-            playerWordText.text = "Your Word: " + player.wordProgress.currentWord;
+            playerWordText.text = player.wordProgress.currentWord;
         }
         
         if (playerHPText != null)
         {
-            playerHPText.text = "HP: " + Mathf.Max(0, (int)player.currentHP);
+            for (int i = 0; i < 3; i++)
+            {
+                hearts[i].SetActive(i < player.currentHP);
+            }
+            //playerHPText.text = "HP: " + Mathf.Max(0, (int)player.currentHP);
         }
         
         if (playerTimerText != null)
         {
             int seconds = Mathf.Max(0, Mathf.CeilToInt(player.currentTime));
-            playerTimerText.text = "Time: " + seconds + "s";
+            playerTimerText.text = seconds + "s";
             
             // Warning color when time is low
             if (seconds <= 10)
