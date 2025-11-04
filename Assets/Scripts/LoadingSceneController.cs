@@ -10,6 +10,9 @@ public class LoadingSceneController : MonoBehaviour
     
     void Start()
     {
+        // Ensure Time.timeScale is reset (in case it was paused in previous scene)
+        Time.timeScale = 1f;
+        
         StartCoroutine(LoadingSequence());
     }
     
@@ -19,7 +22,7 @@ public class LoadingSceneController : MonoBehaviour
         
         while (elapsed < loadingDuration)
         {
-            elapsed += Time.deltaTime;
+            elapsed += Time.unscaledDeltaTime; // Use unscaledDeltaTime to work even if timeScale = 0
             float progress = Mathf.Clamp01(elapsed / loadingDuration);
             
             if (progressBar != null)

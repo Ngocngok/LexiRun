@@ -117,10 +117,7 @@ public class UIManager : MonoBehaviour
             tutorialOKButton.onClick.AddListener(OnTutorialOK);
         }
         
-        if (tutorialPanel != null)
-        {
-            tutorialPanel.SetActive(false);
-        }
+        
     }
     
     public void Initialize(PlayerController player, List<BotController> bots)
@@ -161,14 +158,12 @@ public class UIManager : MonoBehaviour
             playerWordText.text = player.wordProgress.currentWord;
         }
         
-        if (playerHPText != null)
+        for (int i = 0; i < 3; i++)
         {
-            for (int i = 0; i < 3; i++)
-            {
-                hearts[i].SetActive(i < player.currentHP);
-            }
-            //playerHPText.text = "HP: " + Mathf.Max(0, (int)player.currentHP);
+            hearts[i].SetActive(i < player.currentHP);
         }
+        //playerHPText.text = "HP: " + Mathf.Max(0, (int)player.currentHP);
+        
         
         if (playerTimerText != null)
         {

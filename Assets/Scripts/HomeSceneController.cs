@@ -13,6 +13,9 @@ public class HomeSceneController : MonoBehaviour
     
     void Start()
     {
+        // Ensure Time.timeScale is reset (in case it was paused in previous scene)
+        Time.timeScale = 1f;
+        
         currentLevel = SettingsManager.GetCurrentLevel();
         
         if (levelButtonText != null)

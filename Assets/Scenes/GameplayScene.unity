@@ -3510,7 +3510,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1115648645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4103,9 +4103,9 @@ MonoBehaviour:
   tutorialSlide1: {fileID: 863974700}
   tutorialSlide2: {fileID: 505574823}
   tutorialSlide3: {fileID: 454165305}
-  tutorialImage1: {fileID: 0}
-  tutorialImage2: {fileID: 0}
-  tutorialImage3: {fileID: 0}
+  tutorialImage1: {fileID: 1062869549}
+  tutorialImage2: {fileID: 1070876601}
+  tutorialImage3: {fileID: 449257687}
   tutorialNextButton1: {fileID: 799853881}
   tutorialNextButton2: {fileID: 397855334}
   tutorialOKButton: {fileID: 968317993}
