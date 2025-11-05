@@ -211,16 +211,18 @@ public class GameManager : MonoBehaviour
         
         player = playerObj.GetComponent<PlayerController>();
         
-        // Swap character model based on selection
-        SwapPlayerCharacterModel(playerObj);
-        
         // Refresh the animation controller reference after swapping model
         CharacterAnimationController animController = playerObj.GetComponent<CharacterAnimationController>();
-        if (animController != null)
-        {
-            // Force it to find the new animator
-            animController.RefreshAnimator();
-        }
+        // if (animController != null)
+        // {
+        //     // Force it to find the new animator
+        //     animController.RefreshAnimator();
+        // }
+        
+        // Swap character model based on selection
+        SwapPlayerCharacterModel(playerObj, animController);
+        
+        
         
         // Use difficulty-based time limit
         float timeLimit = currentDifficulty != null ? currentDifficulty.timeLimit : config.playerStartingTime;
@@ -228,7 +230,7 @@ public class GameManager : MonoBehaviour
         player.currentTime = timeLimit;
     }
     
-    void SwapPlayerCharacterModel(GameObject playerObj)
+    void SwapPlayerCharacterModel(GameObject playerObj, CharacterAnimationController animController)
     {
         // Get selected character path
         string selectedCharacterPath = CharacterSelectionManager.GetSelectedCharacterPath();
@@ -264,11 +266,20 @@ public class GameManager : MonoBehaviour
                 Destroy(col);
             }
             
+            // Remove CharacterAnimationController from the character model if it exists
+            // (The Player parent has its own CharacterAnimationController)
+            CharacterAnimationController charAnimController = newModel.GetComponent<CharacterAnimationController>();
+            if (charAnimController != null)
+            {
+                Destroy(charAnimController);
+            }
+            
             // Ensure animator starts with Idle_A animation
             Animator animator = newModel.GetComponent<Animator>();
             if (animator != null)
             {
                 animator.Play("Idle_A", 0, 0f);
+                animController.AssignNewAnimator(animator);
             }
         }
         else

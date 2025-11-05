@@ -19,7 +19,7 @@ public abstract class ActorController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         gameManager = GameManager.Instance;
-        animationController = GetComponentInChildren<CharacterAnimationController>();
+        animationController = GetComponent<CharacterAnimationController>();
         
         // Set actor color
         MeshRenderer renderer = GetComponentInChildren<MeshRenderer>();
