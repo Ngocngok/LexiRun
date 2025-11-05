@@ -287,7 +287,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < config.botCount; i++)
         {
             float angle = (i + 1) * (360f / (config.botCount + 1)) * Mathf.Deg2Rad;
-            float radius = Mathf.Max(config.arenaWidth, config.arenaHeight) / 3f;
+            float radius = Mathf.Max(config.arenaWidth, config.arenaHeight) / 4f;
             Vector3 spawnPos = new Vector3(
                 Mathf.Cos(angle) * radius,
                 1,
