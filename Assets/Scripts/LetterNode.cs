@@ -1,10 +1,11 @@
 using UnityEngine;
 using System.Collections.Generic;
+using TMPro;
 
 public class LetterNode : MonoBehaviour
 {
     public char letter;
-    public TextMesh letterText;
+    public TextMeshPro letterText;
     public MeshRenderer nodeRenderer;
     
     private Material nodeMaterial;
