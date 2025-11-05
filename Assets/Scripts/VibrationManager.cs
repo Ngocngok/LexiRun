@@ -1,5 +1,6 @@
 using UnityEngine;
 using Lofelt.NiceVibrations;
+using MoreMountains.NiceVibrations;
 
 /// <summary>
 /// Manages haptic feedback/vibration for the game using the Feel package (Nice Vibrations).
@@ -25,6 +26,7 @@ public class VibrationManager : MonoBehaviour
     
     void Awake()
     {
+        DontDestroyOnLoad(this);
         if (Instance == null)
         {
             Instance = this;
@@ -54,6 +56,7 @@ public class VibrationManager : MonoBehaviour
     {
         if (!IsVibrationEnabled()) return;
         
+        MMVibrationManager.Haptic (HapticTypes.LightImpact);
         HapticPatterns.PlayPreset(correctLetterPreset);
     }
     
@@ -64,6 +67,7 @@ public class VibrationManager : MonoBehaviour
     {
         if (!IsVibrationEnabled()) return;
         
+        MMVibrationManager.Haptic (HapticTypes.Warning);
         HapticPatterns.PlayPreset(wrongLetterPreset);
     }
     
@@ -74,6 +78,7 @@ public class VibrationManager : MonoBehaviour
     {
         if (!IsVibrationEnabled()) return;
         
+        MMVibrationManager.Haptic (HapticTypes.Success);
         HapticPatterns.PlayPreset(wordCompletePreset);
     }
     

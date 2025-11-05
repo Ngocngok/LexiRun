@@ -29,8 +29,8 @@ public class BotController : ActorController
                 wordProgress,
                 gameManager.config.floatingTextHeight,
                 gameManager.config.botFloatingTextSize,
-                gameManager.config.unfilledLetterColor,
-                gameManager.config.filledLetterColor
+                gameManager.config.botUnfilledLetterColor,
+                gameManager.config.botFilledLetterColor
             );
         }
     }

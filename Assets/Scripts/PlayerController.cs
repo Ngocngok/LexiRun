@@ -1,3 +1,4 @@
+using MoreMountains.NiceVibrations;
 using UnityEngine;
 
 public class PlayerController : ActorController
@@ -28,7 +29,7 @@ public class PlayerController : ActorController
                 gameManager.config.floatingTextHeight,
                 gameManager.config.playerFloatingTextSize,
                 gameManager.config.unfilledLetterColor,
-                gameManager.config.filledLetterColor
+                gameManager.config.playerFilledLetterColor
             );
         }
     }
@@ -88,7 +89,7 @@ public class PlayerController : ActorController
     {
         base.OnWordCompleted();
         collectWordFX.Play(true);
-        
+        MMVibrationManager.Vibrate();
         // Trigger strong vibration for word completion
         if (VibrationManager.Instance != null)
         {
@@ -100,7 +101,7 @@ public class PlayerController : ActorController
     {
         base.OnCorrectTouch(node);
         collectLetterFX.Play(true);
-        
+        MMVibrationManager.Vibrate();
         // Trigger light vibration for correct letter
         if (VibrationManager.Instance != null)
         {
@@ -117,7 +118,7 @@ public class PlayerController : ActorController
         {
             CameraShake.Instance.Shake();
         }
-        
+        MMVibrationManager.Vibrate();
         // Trigger strong vibration for wrong letter
         if (VibrationManager.Instance != null)
         {

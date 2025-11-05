@@ -34,11 +34,12 @@ MonoBehaviour:
   nodeRandomOffsetMin: 0.2
   nodeRandomOffsetMax: 1
   floatingTextHeight: 2
-  floatingTextLetterSpacing: 0.5
-  playerFloatingTextSize: 60
-  botFloatingTextSize: 40
-  unfilledLetterColor: {r: 1, g: 1, b: 1, a: 1}
-  filledLetterColor: {r: 0, g: 0, b: 1, a: 1}
+  floatingTextLetterSpacing: 1.5
+  playerFloatingTextSize: 120
+  botFloatingTextSize: 80
+  unfilledLetterColor: {r: 0.17892374, g: 1, b: 0.08018869, a: 1}
+  playerFilledLetterColor: {r: 0, g: 1, b: 0, a: 1}
+  botFilledLetterColor: {r: 1, g: 0, b: 0, a: 1}
   wordList:
   - APPLE
   - BREAD

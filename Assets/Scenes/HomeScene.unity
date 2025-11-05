@@ -131,6 +131,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LetterNode
       objectReference: {fileID: 0}
+    - target: {fileID: 996197559715950636, guid: 433bcfbae654d514d8774628c6060503, type: 3}
+      propertyPath: m_text
+      value: U
+      objectReference: {fileID: 0}
     - target: {fileID: 4434774421213290364, guid: 433bcfbae654d514d8774628c6060503, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -222,7 +226,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7580975822031063291, guid: 433bcfbae654d514d8774628c6060503, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 433bcfbae654d514d8774628c6060503, type: 3}
 --- !u!4 &17738650 stripped
 Transform:
@@ -806,7 +813,7 @@ Transform:
   m_GameObject: {fileID: 404575853}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3, y: 0, z: 2}
+  m_LocalPosition: {x: 2.51, y: 0, z: 2.06}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1024,7 +1031,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7580975822031063291, guid: 433bcfbae654d514d8774628c6060503, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 433bcfbae654d514d8774628c6060503, type: 3}
 --- !u!4 &556188614 stripped
 Transform:
@@ -1041,6 +1051,7 @@ GameObject:
   m_Component:
   - component: {fileID: 740862524}
   - component: {fileID: 740862526}
+  - component: {fileID: 740862527}
   m_Layer: 0
   m_Name: SafeArea
   m_TagString: Untagged
@@ -1076,6 +1087,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 740862523}
   m_CullTransparentMesh: 1
+--- !u!114 &740862527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740862523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c97afc556caea1c44969477eb7ddec74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ConformX: 1
+  ConformY: 1
+  Logging: 0
 --- !u!1 &784546259
 GameObject:
   m_ObjectHideFlags: 0
@@ -1399,6 +1425,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LetterNode
       objectReference: {fileID: 0}
+    - target: {fileID: 996197559715950636, guid: 433bcfbae654d514d8774628c6060503, type: 3}
+      propertyPath: m_text
+      value: I
+      objectReference: {fileID: 0}
     - target: {fileID: 4434774421213290364, guid: 433bcfbae654d514d8774628c6060503, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -1462,7 +1492,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7580975822031063291, guid: 433bcfbae654d514d8774628c6060503, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 433bcfbae654d514d8774628c6060503, type: 3}
 --- !u!4 &883213473 stripped
 Transform:
@@ -1532,6 +1565,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LetterNode
       objectReference: {fileID: 0}
+    - target: {fileID: 996197559715950636, guid: 433bcfbae654d514d8774628c6060503, type: 3}
+      propertyPath: m_text
+      value: F
+      objectReference: {fileID: 0}
     - target: {fileID: 4434774421213290364, guid: 433bcfbae654d514d8774628c6060503, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -1599,7 +1636,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7580975822031063291, guid: 433bcfbae654d514d8774628c6060503, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 433bcfbae654d514d8774628c6060503, type: 3}
 --- !u!4 &955628630 stripped
 Transform:
@@ -2269,6 +2309,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LetterNode
       objectReference: {fileID: 0}
+    - target: {fileID: 996197559715950636, guid: 433bcfbae654d514d8774628c6060503, type: 3}
+      propertyPath: m_text
+      value: E
+      objectReference: {fileID: 0}
     - target: {fileID: 4434774421213290364, guid: 433bcfbae654d514d8774628c6060503, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -2336,7 +2380,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7580975822031063291, guid: 433bcfbae654d514d8774628c6060503, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 433bcfbae654d514d8774628c6060503, type: 3}
 --- !u!4 &1268426604 stripped
 Transform:
@@ -2600,7 +2647,7 @@ Transform:
   m_GameObject: {fileID: 1357170556}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1, y: 0, z: -2}
+  m_LocalPosition: {x: -0.6, y: 0, z: -1.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2727,7 +2774,7 @@ Transform:
   m_GameObject: {fileID: 1408593207}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.51, y: 0, z: 2.02}
+  m_LocalPosition: {x: -1.86, y: 0, z: 2.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

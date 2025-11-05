@@ -4,7 +4,7 @@ public class FloatingWordDisplay : MonoBehaviour
 {
     public TextMesh[] letterTexts;
     public float heightOffset = 2f;
-    public float letterSpacing = 0.5f;
+    public float letterSpacing = 1f;
     public int fontSize = 50;
     public Color unfilledColor = Color.white;
     public Color filledColor = Color.blue;
