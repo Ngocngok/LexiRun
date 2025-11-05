@@ -211,10 +211,70 @@ public class GameManager : MonoBehaviour
         
         player = playerObj.GetComponent<PlayerController>();
         
+        // Swap character model based on selection
+        SwapPlayerCharacterModel(playerObj);
+        
+        // Refresh the animation controller reference after swapping model
+        CharacterAnimationController animController = playerObj.GetComponent<CharacterAnimationController>();
+        if (animController != null)
+        {
+            // Force it to find the new animator
+            animController.RefreshAnimator();
+        }
+        
         // Use difficulty-based time limit
         float timeLimit = currentDifficulty != null ? currentDifficulty.timeLimit : config.playerStartingTime;
         player.Initialize(0, "Player", Color.green, config.playerMoveSpeed);
         player.currentTime = timeLimit;
+    }
+    
+    void SwapPlayerCharacterModel(GameObject playerObj)
+    {
+        // Get selected character path
+        string selectedCharacterPath = CharacterSelectionManager.GetSelectedCharacterPath();
+        
+        // Find the existing CharacterModel child
+        Transform existingModel = playerObj.transform.Find("CharacterModel");
+        if (existingModel != null)
+        {
+            Destroy(existingModel.gameObject);
+        }
+        
+        // Load the selected character prefab
+#if UNITY_EDITOR
+        GameObject characterPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(selectedCharacterPath);
+#else
+        string characterName = CharacterSelectionManager.GetSelectedCharacterName();
+        GameObject characterPrefab = Resources.Load<GameObject>(characterName);
+#endif
+        
+        if (characterPrefab != null)
+        {
+            // Instantiate the new character model as a child
+            GameObject newModel = Instantiate(characterPrefab, playerObj.transform);
+            newModel.name = "CharacterModel";
+            newModel.transform.localPosition = new Vector3(0, -1, 0);
+            newModel.transform.localRotation = Quaternion.identity;
+            newModel.transform.localScale = new Vector3(1.52f, 1.52f, 1.52f);
+            
+            // Remove any colliders from the character model (player prefab has its own collider)
+            Collider[] colliders = newModel.GetComponents<Collider>();
+            foreach (Collider col in colliders)
+            {
+                Destroy(col);
+            }
+            
+            // Ensure animator starts with Idle_A animation
+            Animator animator = newModel.GetComponent<Animator>();
+            if (animator != null)
+            {
+                animator.Play("Idle_A", 0, 0f);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Failed to load selected character: " + selectedCharacterPath);
+        }
     }
     
     void CreateBots()

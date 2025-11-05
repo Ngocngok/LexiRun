@@ -11,6 +11,11 @@ public class CharacterAnimationController : MonoBehaviour
     
     void Start()
     {
+        RefreshAnimator();
+    }
+    
+    public void RefreshAnimator()
+    {
         animator = GetComponentInChildren<Animator>();
         
         if (animator != null)
