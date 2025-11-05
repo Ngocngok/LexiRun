@@ -38,11 +38,14 @@ public class UIManager : MonoBehaviour
     public GameObject tutorialSlide1;
     public GameObject tutorialSlide2;
     public GameObject tutorialSlide3;
+    public GameObject tutorialSlide4;
     public Image tutorialImage1;
     public Image tutorialImage2;
     public Image tutorialImage3;
+    public Image tutorialImage4;
     public Button tutorialNextButton1;
     public Button tutorialNextButton2;
+    public Button tutorialNextButton3;
     public Button tutorialOKButton;
     
     private PlayerController player;
@@ -110,6 +113,11 @@ public class UIManager : MonoBehaviour
         if (tutorialNextButton2 != null)
         {
             tutorialNextButton2.onClick.AddListener(OnTutorialNext2);
+        }
+        
+        if (tutorialNextButton3 != null)
+        {
+            tutorialNextButton3.onClick.AddListener(OnTutorialNext3);
         }
         
         if (tutorialOKButton != null)
@@ -331,6 +339,7 @@ public class UIManager : MonoBehaviour
         if (tutorialSlide1 != null) tutorialSlide1.SetActive(false);
         if (tutorialSlide2 != null) tutorialSlide2.SetActive(false);
         if (tutorialSlide3 != null) tutorialSlide3.SetActive(false);
+        if (tutorialSlide4 != null) tutorialSlide4.SetActive(false);
         
         // Show requested slide
         switch (slideNumber)
@@ -343,6 +352,9 @@ public class UIManager : MonoBehaviour
                 break;
             case 3:
                 if (tutorialSlide3 != null) tutorialSlide3.SetActive(true);
+                break;
+            case 4:
+                if (tutorialSlide4 != null) tutorialSlide4.SetActive(true);
                 break;
         }
         
@@ -365,6 +377,15 @@ public class UIManager : MonoBehaviour
             AudioManager.Instance.PlayButtonClick();
         }
         ShowTutorialSlide(3);
+    }
+    
+    void OnTutorialNext3()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayButtonClick();
+        }
+        ShowTutorialSlide(4);
     }
     
     void OnTutorialOK()
