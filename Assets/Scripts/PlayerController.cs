@@ -88,17 +88,41 @@ public class PlayerController : ActorController
     {
         base.OnWordCompleted();
         collectWordFX.Play(true);
+        
+        // Trigger strong vibration for word completion
+        if (VibrationManager.Instance != null)
+        {
+            VibrationManager.Instance.VibrateWordComplete();
+        }
     }
 
     protected override void OnCorrectTouch(LetterNode node)
     {
         base.OnCorrectTouch(node);
-        collectLetterFX.Play(true);  
+        collectLetterFX.Play(true);
+        
+        // Trigger light vibration for correct letter
+        if (VibrationManager.Instance != null)
+        {
+            VibrationManager.Instance.VibrateCorrectLetter();
+        }
     }
 
     protected override void OnWrongTouch(LetterNode node)
     {
         base.OnWrongTouch(node);
+        
+        // Trigger camera shake effect
+        if (CameraShake.Instance != null)
+        {
+            CameraShake.Instance.Shake();
+        }
+        
+        // Trigger strong vibration for wrong letter
+        if (VibrationManager.Instance != null)
+        {
+            VibrationManager.Instance.VibrateWrongLetter();
+        }
         
         // Play wrong letter sound
         if (AudioManager.Instance != null)
