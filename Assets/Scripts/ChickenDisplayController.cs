@@ -40,7 +40,7 @@ public class ChickenDisplayController : MonoBehaviour
         {
             case DisplayType.Victory:
                 // Play Spin animation on base layer
-                chickenAnimator.Play("Spin", 0);
+                chickenAnimator.Play("Spin/Splash", 0);
                 break;
                 
             case DisplayType.Defeat:
