@@ -11,8 +11,9 @@ public class UIManager : MonoBehaviour
     public GameObject[] hearts;
     
     [Header("Bot Info")]
-    public Transform botInfoParent;
-    public GameObject botInfoPrefab;
+    public Text bot1ScoreText;
+    public Text bot2ScoreText;
+    public Text bot3ScoreText;
     
     [Header("Victory Screen")]
     public GameObject victoryPanel;
@@ -47,7 +48,6 @@ public class UIManager : MonoBehaviour
     private PlayerController player;
     private int currentTutorialSlide = 1;
     private List<BotController> bots;
-    private Dictionary<BotController, BotInfoUI> botInfoUIs = new Dictionary<BotController, BotInfoUI>();
     
     void Start()
     {
@@ -124,21 +124,6 @@ public class UIManager : MonoBehaviour
     {
         this.player = player;
         this.bots = bots;
-        
-        // Create bot info UIs
-        if (botInfoParent != null && botInfoPrefab != null)
-        {
-            foreach (BotController bot in bots)
-            {
-                GameObject botInfoObj = Instantiate(botInfoPrefab, botInfoParent);
-                BotInfoUI botInfo = botInfoObj.GetComponent<BotInfoUI>();
-                if (botInfo != null)
-                {
-                    botInfo.Initialize(bot);
-                    botInfoUIs[bot] = botInfo;
-                }
-            }
-        }
     }
     
     void Update()
@@ -184,12 +169,22 @@ public class UIManager : MonoBehaviour
     
     void UpdateBotInfo()
     {
-        foreach (var kvp in botInfoUIs)
+        if (bots == null || bots.Count == 0) return;
+        
+        // Update bot scores
+        if (bots.Count > 0 && bot1ScoreText != null)
         {
-            if (kvp.Value != null)
-            {
-                kvp.Value.UpdateInfo();
-            }
+            bot1ScoreText.text = bots[0].completedWords + "/3";
+        }
+        
+        if (bots.Count > 1 && bot2ScoreText != null)
+        {
+            bot2ScoreText.text = bots[1].completedWords + "/3";
+        }
+        
+        if (bots.Count > 2 && bot3ScoreText != null)
+        {
+            bot3ScoreText.text = bots[2].completedWords + "/3";
         }
     }
     
@@ -390,55 +385,5 @@ public class UIManager : MonoBehaviour
         
         // Resume game
         Time.timeScale = 1f;
-    }
-}
-
-public class BotInfoUI : MonoBehaviour
-{
-    public Text botNameText;
-    public Text botWordText;
-    public Text botMistakesText;
-    public Text botWordsCompletedText;
-    
-    private BotController bot;
-    
-    public void Initialize(BotController bot)
-    {
-        this.bot = bot;
-        
-        if (botNameText != null)
-        {
-            botNameText.text = bot.actorName;
-            botNameText.color = bot.actorColor;
-        }
-    }
-    
-    public void UpdateInfo()
-    {
-        if (bot == null) return;
-        
-        if (bot.isEliminated)
-        {
-            if (botWordText != null) botWordText.text = "ELIMINATED";
-            if (botMistakesText != null) botMistakesText.text = "";
-            if (botWordsCompletedText != null) botWordsCompletedText.text = "";
-            return;
-        }
-        
-        // Hide word text since it's now floating above the bot
-        if (botWordText != null)
-        {
-            botWordText.text = "";
-        }
-        
-        if (botMistakesText != null)
-        {
-            botMistakesText.text = "Mistakes: " + bot.mistakeCount + "/3";
-        }
-        
-        if (botWordsCompletedText != null)
-        {
-            botWordsCompletedText.text = "Words: " + bot.completedWords + "/3";
-        }
     }
 }

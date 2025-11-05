@@ -170,7 +170,7 @@ GameObject:
   - component: {fileID: 1585789207664545382}
   - component: {fileID: 3575591665267843765}
   - component: {fileID: 5074779710395336343}
-  - component: {fileID: 1640104909836872798}
+  - component: {fileID: 4607495395274219021}
   m_Layer: 0
   m_Name: BotInfoUI
   m_TagString: Untagged
@@ -193,7 +193,7 @@ RectTransform:
   - {fileID: 7715845276791992518}
   - {fileID: 7311452453435373624}
   - {fileID: 5358461705671449664}
-  - {fileID: 854647238814981676}
+  - {fileID: 6711927707645366831}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -265,7 +265,7 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &1640104909836872798
+--- !u!114 &4607495395274219021
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -274,14 +274,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 6035019606096387267}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 7a0279c94066a5843908cebfb6a3254d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   botNameText: {fileID: 4305349236530672160}
   botWordText: {fileID: 2890246567151101811}
   botMistakesText: {fileID: 4451303250682530268}
-  botWordsCompletedText: {fileID: 8865239742430068065}
---- !u!1 &8631483981188286088
+  botCurrentWordProgressText: {fileID: 4937395619206744370}
+--- !u!1 &6151197011434978170
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -289,23 +289,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 854647238814981676}
-  - component: {fileID: 839128363883544247}
-  - component: {fileID: 8865239742430068065}
+  - component: {fileID: 6711927707645366831}
+  - component: {fileID: 7649017039857938221}
+  - component: {fileID: 4937395619206744370}
   m_Layer: 0
-  m_Name: BotWordsCompletedText
+  m_Name: BotCurrentWordProgressText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &854647238814981676
+--- !u!224 &6711927707645366831
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8631483981188286088}
+  m_GameObject: {fileID: 6151197011434978170}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -313,26 +313,26 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 6165961428970105536}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &839128363883544247
+--- !u!222 &7649017039857938221
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8631483981188286088}
+  m_GameObject: {fileID: 6151197011434978170}
   m_CullTransparentMesh: 1
---- !u!114 &8865239742430068065
+--- !u!114 &4937395619206744370
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8631483981188286088}
+  m_GameObject: {fileID: 6151197011434978170}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
@@ -359,7 +359,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Words: 0/3'
+  m_Text: 0/3
 --- !u!1 &9123127463311012013
 GameObject:
   m_ObjectHideFlags: 0
