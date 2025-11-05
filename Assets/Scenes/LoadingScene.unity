@@ -877,6 +877,7 @@ GameObject:
   - component: {fileID: 1504933619}
   - component: {fileID: 1504933618}
   - component: {fileID: 1504933620}
+  - component: {fileID: 1504933621}
   m_Layer: 0
   m_Name: TitleText
   m_TagString: Untagged
@@ -960,6 +961,47 @@ MonoBehaviour:
   m_EffectColor: {r: 0.6792453, g: 0.561225, b: 0.36845854, a: 1}
   m_EffectDistance: {x: 8, y: -8}
   m_UseGraphicAlpha: 1
+--- !u!114 &1504933621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504933616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de6ca1bfb94d0344186ed6ade7f57567, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playOnEnable: 1
+  delay: 0
+  minScale: 0.95
+  maxScale: 1.05
+  speed: 1
+  curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &2096792288
 GameObject:
   m_ObjectHideFlags: 0
