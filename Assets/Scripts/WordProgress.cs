@@ -56,6 +56,20 @@ public class WordProgress
         }
     }
     
+    public void RemoveRandomFilledLetter()
+    {
+        if (filledIndices.Count > 0)
+        {
+            // Pick a random filled letter
+            int randomIndexInList = Random.Range(0, filledIndices.Count);
+            int letterIndex = filledIndices[randomIndexInList];
+            
+            // Remove it
+            filledLetters[letterIndex] = false;
+            filledIndices.RemoveAt(randomIndexInList);
+        }
+    }
+    
     public bool IsComplete()
     {
         foreach (bool filled in filledLetters)

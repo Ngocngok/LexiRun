@@ -135,8 +135,19 @@ public class PlayerController : ActorController
         // Always deduct HP
         currentHP -= gameManager.config.hpLossAmount;
         
-        // If no letters collected, also deduct time
-        if (progress == 0)
+        // If letters collected > 0, randomly remove one letter
+        if (progress > 0)
+        {
+            wordProgress.RemoveRandomFilledLetter();
+            
+            // Update floating word display
+            if (floatingWordDisplay != null)
+            {
+                floatingWordDisplay.UpdateWord(wordProgress);
+            }
+        }
+        // If no letters collected, deduct time instead
+        else if (progress == 0)
         {
             currentTime -= gameManager.config.timeDeductionAtZeroProgress;
             if (currentTime <= 0)
