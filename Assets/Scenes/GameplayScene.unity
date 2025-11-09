@@ -1551,9 +1551,9 @@ MonoBehaviour:
   - {fileID: 8456680261882308652, guid: 04f7653286930464f8016c1ef33ddc48, type: 3}
   - {fileID: 4696417025516889457, guid: 2fe09b9ceb7b0ed41a0e54c6bb3b36c2, type: 3}
   botPositions:
-  - {x: -5.14, y: 0, z: -1.99}
-  - {x: -1.65, y: 0, z: 9.91}
-  - {x: 6.72, y: 0, z: -1.81}
+  - {x: -5.14, y: 1, z: -1.99}
+  - {x: -1.65, y: 1, z: 9.91}
+  - {x: 6.72, y: 1, z: -1.81}
   arenaParent: {fileID: 0}
   actorsParent: {fileID: 0}
 --- !u!1001 &257556520
