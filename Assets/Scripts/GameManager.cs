@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public GameObject letterNodePrefab;
     public GameObject playerPrefab;
     public GameObject[] botPrefabs; // Array of different bot prefabs
+    public Vector3[] botPositions;
     
     public Transform arenaParent;
     public Transform actorsParent;
@@ -257,7 +258,7 @@ public class GameManager : MonoBehaviour
             newModel.name = "CharacterModel";
             newModel.transform.localPosition = new Vector3(0, -1, 0);
             newModel.transform.localRotation = Quaternion.identity;
-            newModel.transform.localScale = new Vector3(1.52f, 1.52f, 1.52f);
+            newModel.transform.localScale = new Vector3(1.7f, 1.7f, 1.7f);
             
             // Remove any colliders from the character model (player prefab has its own collider)
             Collider[] colliders = newModel.GetComponents<Collider>();
@@ -310,7 +311,7 @@ public class GameManager : MonoBehaviour
                 ? botPrefabs[i] 
                 : botPrefabs[0];
             
-            GameObject botObj = Instantiate(botPrefabToUse, spawnPos, Quaternion.identity, actorsParent);
+            GameObject botObj = Instantiate(botPrefabToUse, botPositions[i], Quaternion.identity, actorsParent);
             botObj.name = "Bot_" + (i + 1);
             
             BotController bot = botObj.GetComponent<BotController>();

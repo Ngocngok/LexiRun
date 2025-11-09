@@ -109,7 +109,6 @@ GameObject:
   - component: {fileID: 2012484680144267822}
   - component: {fileID: 2012484680144268243}
   - component: {fileID: 2012484680144268240}
-  - component: {fileID: 2012484680144268241}
   m_Layer: 0
   m_Name: Donkey
   m_TagString: Untagged
@@ -187,29 +186,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!136 &2012484680144268241
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2012484680144267823}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 0.41115963
-  m_Height: 1.1316013
-  m_Direction: 2
-  m_Center: {x: 0.016002297, y: 0.5668026, z: 0.15972126}
 --- !u!1 &5875232626210643010
 GameObject:
   m_ObjectHideFlags: 0
