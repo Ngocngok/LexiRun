@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
     public Text playerWordText;
     public Text playerHPText;
     public Text playerTimerText;
+    public Text playerScoreText;
     public GameObject[] hearts;
     
     [Header("Bot Info")]
@@ -172,6 +173,11 @@ public class UIManager : MonoBehaviour
             {
                 playerTimerText.color = Color.white;
             }
+        }
+        
+        if (playerScoreText != null)
+        {
+            playerScoreText.text = player.completedWords + "/3";
         }
     }
     
