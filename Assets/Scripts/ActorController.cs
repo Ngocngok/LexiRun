@@ -147,16 +147,25 @@ public abstract class ActorController : MonoBehaviour
     
     protected void Move(Vector3 direction)
     {
-        if (rb != null && direction.magnitude > 0.1f)
+        if (rb != null)
         {
-            Vector3 movement = direction.normalized * moveSpeed * Time.fixedDeltaTime;
-            rb.MovePosition(rb.position + movement);
-            
-            // Rotate to face movement direction
-            if (movement.magnitude > 0.01f)
+            if (direction.magnitude > 0.1f)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(movement);
-                rb.rotation = Quaternion.Slerp(rb.rotation, targetRotation, Time.fixedDeltaTime * 10f);
+                Vector3 movement = direction.normalized * moveSpeed * Time.fixedDeltaTime;
+                rb.MovePosition(rb.position + movement);
+                
+                // Rotate to face movement direction
+                if (movement.magnitude > 0.01f)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(movement);
+                    rb.rotation = Quaternion.Slerp(rb.rotation, targetRotation, Time.fixedDeltaTime * 10f);
+                }
+            }
+            else
+            {
+                // Stop the rigidbody when there's no input to prevent sliding
+                rb.linearVelocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
             }
         }
     }
