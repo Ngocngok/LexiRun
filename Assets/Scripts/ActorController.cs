@@ -12,8 +12,14 @@ public abstract class ActorController : MonoBehaviour
     protected GameManager gameManager;
     protected Rigidbody rb;
     protected float moveSpeed;
+    protected float originalMoveSpeed;
     protected FloatingWordDisplay floatingWordDisplay;
     protected CharacterAnimationController animationController;
+
+    protected float speedReductionTimer = 0f;
+    protected bool isSpeedReduced = false;
+    protected const float SPEED_REDUCTION_DURATION = 3f;
+    protected const float SPEED_REDUCTION_MULTIPLIER = 0.5f;
     
     protected virtual void Start()
     {
@@ -38,6 +44,7 @@ public abstract class ActorController : MonoBehaviour
         actorName = name;
         //actorColor = color;
         moveSpeed = speed;
+        originalMoveSpeed = speed;
         
         MeshRenderer renderer = GetComponentInChildren<MeshRenderer>();
         if (renderer != null)
@@ -122,7 +129,37 @@ public abstract class ActorController : MonoBehaviour
     
     protected virtual void OnWrongTouch(LetterNode node)
     {
+        ApplySpeedPenalty();
         // Override in derived classes
+    }
+
+    protected void ApplySpeedPenalty()
+    {
+        if (!isSpeedReduced)
+        {
+            // Ensure we have the correct original speed
+            if (moveSpeed > originalMoveSpeed * 0.8f) 
+            {
+                originalMoveSpeed = moveSpeed;
+            }
+        }
+        
+        moveSpeed = originalMoveSpeed * SPEED_REDUCTION_MULTIPLIER;
+        isSpeedReduced = true;
+        speedReductionTimer = SPEED_REDUCTION_DURATION;
+    }
+
+    protected void HandleSpeedReduction()
+    {
+        if (isSpeedReduced)
+        {
+            speedReductionTimer -= Time.deltaTime;
+            if (speedReductionTimer <= 0)
+            {
+                moveSpeed = originalMoveSpeed;
+                isSpeedReduced = false;
+            }
+        }
     }
     
     protected virtual void OnWordCompleted()

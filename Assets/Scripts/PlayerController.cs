@@ -36,6 +36,7 @@ public class PlayerController : ActorController
     
     void Update()
     {
+        HandleSpeedReduction();
         
         rb.linearVelocity = Vector3.zero;
         
