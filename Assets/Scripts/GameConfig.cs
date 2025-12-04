@@ -25,7 +25,20 @@ public class GameConfig : ScriptableObject
     public int wordsToWin = 3;
     public float wordCompletionDelay = 1f;
     public float touchCooldown = 0.5f;
+    public float characterPushForce = 5f;
     
+    [Header("Bomb Settings")]
+    public int maxBombs = 3;
+    public float bombSpawnIntervalMin = 4f;
+    public float bombSpawnIntervalMax = 6f;
+    public float bombExplosionRadius = 2f;
+
+    [Header("Booster Settings")]
+    public int maxBoosters = 3;
+    public float boosterSpawnIntervalMin = 4f;
+    public float boosterSpawnIntervalMax = 6f;
+    public float boosterDuration = 3f; // For Slow, SpeedUp, Trap, FreezeAll
+
     [Header("Arena Settings")]
     public float arenaWidth = 30f;
     public float arenaHeight = 40f;

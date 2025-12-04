@@ -71,6 +71,8 @@ public class GameManager : MonoBehaviour
         CreateArena();
         CreatePlayer();
         CreateBots();
+        CreateBombSpawner();
+        CreateBoosterSpawner();
         
         StartGame();
         
@@ -289,6 +291,18 @@ public class GameManager : MonoBehaviour
         }
     }
     
+    void CreateBombSpawner()
+    {
+        GameObject spawnerObj = new GameObject("BombSpawner");
+        spawnerObj.AddComponent<BombSpawner>();
+    }
+
+    void CreateBoosterSpawner()
+    {
+        GameObject spawnerObj = new GameObject("BoosterSpawner");
+        spawnerObj.AddComponent<BoosterSpawner>();
+    }
+
     void CreateBots()
     {
         Color[] botColors = { Color.red, Color.blue, Color.yellow, Color.magenta };
@@ -439,5 +453,21 @@ public class GameManager : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene(
             UnityEngine.SceneManagement.SceneManager.GetActiveScene().name
         );
+    }
+
+    public void FreezeAllActorsExcept(ActorController excluder, float duration)
+    {
+        if (player != excluder)
+        {
+            player.ApplyFreeze(duration);
+        }
+
+        foreach (var bot in bots)
+        {
+            if (bot != excluder)
+            {
+                bot.ApplyFreeze(duration);
+            }
+        }
     }
 }
