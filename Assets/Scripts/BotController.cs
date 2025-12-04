@@ -42,6 +42,8 @@ public class BotController : ActorController
     
     void Update()
     {
+        rb.linearVelocity = Vector3.zero;
+        
         if (isEliminated || !gameManager.IsGameActive())
         {
             return;
