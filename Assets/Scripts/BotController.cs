@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class BotController : ActorController
 {
@@ -11,11 +12,13 @@ public class BotController : ActorController
     private bool isPaused = false;
     private float pauseTimer = 0f;
     private DifficultySettings difficultySettings;
+    private LetterNode[] allNodes;
     
     protected override void Start()
     {
         base.Start();
         replanTimer = Random.Range(0f, gameManager.config.botReplanInterval);
+        allNodes = FindObjectsByType<LetterNode>(FindObjectsSortMode.None);
     }
     
     protected override void CreateFloatingWordDisplay()
@@ -133,45 +136,59 @@ public class BotController : ActorController
             return;
         }
         
-        // Find the first unfilled letter
-        char targetLetter = '\0';
+        if (allNodes == null || allNodes.Length == 0)
+        {
+            allNodes = FindObjectsByType<LetterNode>(FindObjectsSortMode.None);
+        }
+
+        LetterNode bestNode = null;
+        float bestDistance = float.MaxValue;
+        
+        // Get all needed letters
+        List<char> neededLetters = new List<char>();
         for (int i = 0; i < wordProgress.currentWord.Length; i++)
         {
             if (!wordProgress.filledLetters[i])
             {
-                targetLetter = wordProgress.currentWord[i];
-                break;
+                neededLetters.Add(wordProgress.currentWord[i]);
             }
         }
         
-        if (targetLetter == '\0')
-        {
-            if (animationController != null)
-            {
-                animationController.SetIdle();
-            }
-            return;
-        }
-        
-        // Find the closest node with that letter
-        LetterNode[] allNodes = FindObjectsByType<LetterNode>(FindObjectsSortMode.None);
-        LetterNode closestNode = null;
-        float closestDistance = float.MaxValue;
-        
+        if (neededLetters.Count == 0) return;
+
+        // First pass: Look for closest UNLOCKED node with a needed letter
         foreach (LetterNode node in allNodes)
         {
-            if (node.letter == targetLetter)
+            if (neededLetters.Contains(node.letter) && !node.IsLocked)
             {
                 float distance = Vector3.Distance(transform.position, node.transform.position);
-                if (distance < closestDistance)
+                if (distance < bestDistance)
                 {
-                    closestDistance = distance;
-                    closestNode = node;
+                    bestDistance = distance;
+                    bestNode = node;
                 }
             }
         }
         
-        targetNode = closestNode;
+        // Second pass: If no unlocked node found, look for closest LOCKED node (we have no choice but to wait)
+        if (bestNode == null)
+        {
+            bestDistance = float.MaxValue;
+            foreach (LetterNode node in allNodes)
+            {
+                if (neededLetters.Contains(node.letter))
+                {
+                    float distance = Vector3.Distance(transform.position, node.transform.position);
+                    if (distance < bestDistance)
+                    {
+                        bestDistance = distance;
+                        bestNode = node;
+                    }
+                }
+            }
+        }
+        
+        targetNode = bestNode;
         
         // Set walk animation when we have a target
         if (targetNode != null && animationController != null)
@@ -182,12 +199,49 @@ public class BotController : ActorController
     
     private bool IsTargetValid()
     {
-        if (targetNode == null)
+        if (targetNode == null) return false;
+        if (!wordProgress.IsLetterNeeded(targetNode.letter)) return false;
+        
+        if (targetNode.IsLocked)
         {
-            return false;
+            // If last letter, stay.
+            if (GetNeededLetterCount() == 1) return true;
+            
+            // If not last letter, check if a better option exists.
+            if (AnyUnlockedNeededNodeExists()) return false; // Switch!
+            
+            // If no better option, stay.
+            return true;
         }
         
-        return wordProgress.IsLetterNeeded(targetNode.letter);
+        return true;
+    }
+
+    private int GetNeededLetterCount()
+    {
+        int count = 0;
+        if (wordProgress.currentWord != null)
+        {
+            for (int i = 0; i < wordProgress.currentWord.Length; i++)
+            {
+                if (!wordProgress.filledLetters[i]) count++;
+            }
+        }
+        return count;
+    }
+
+    private bool AnyUnlockedNeededNodeExists()
+    {
+        if (allNodes == null) return false;
+        
+        foreach (var node in allNodes)
+        {
+            if (!node.IsLocked && wordProgress.IsLetterNeeded(node.letter))
+            {
+                return true;
+            }
+        }
+        return false;
     }
     
     protected override void OnWrongTouch(LetterNode node)
@@ -224,7 +278,7 @@ public class BotController : ActorController
         }
         
         Vector3 avoidance = Vector3.zero;
-        LetterNode[] allNodes = FindObjectsByType<LetterNode>(FindObjectsSortMode.None);
+        if (allNodes == null) allNodes = FindObjectsByType<LetterNode>(FindObjectsSortMode.None);
         float avoidanceRadius = gameManager.config.botAvoidanceRadius;
         int avoidanceCount = 0;
         

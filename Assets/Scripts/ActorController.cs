@@ -108,6 +108,9 @@ public abstract class ActorController : MonoBehaviour
     
     protected virtual void OnCorrectTouch(LetterNode node)
     {
+        // Lock the node for 2 seconds
+        node.LockNode(2.0f);
+
         wordProgress.FillLetter(node.letter);
         
         if (floatingWordDisplay != null)
