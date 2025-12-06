@@ -19,6 +19,8 @@ public class AudioManager : MonoBehaviour
     public AudioClip wordCompleteSFX;
     public AudioClip gameWinSFX;
     public AudioClip gameLoseSFX;
+    public AudioClip powerUpSFX;
+    public AudioClip powerDownSFX;
     
     void Awake()
     {
@@ -113,4 +115,6 @@ public class AudioManager : MonoBehaviour
     public void PlayWordComplete() => PlaySFX(wordCompleteSFX);
     public void PlayGameWin() => PlaySFX(gameWinSFX);
     public void PlayGameLose() => PlaySFX(gameLoseSFX);
+    public void PlayPowerUp() => PlaySFX(powerUpSFX);
+    public void PlayPowerDown() => PlaySFX(powerDownSFX);
 }

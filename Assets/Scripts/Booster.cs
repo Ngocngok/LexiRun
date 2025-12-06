@@ -11,7 +11,8 @@ public enum BoosterType
 
 public class Booster : MonoBehaviour
 {
-    public BoosterType type;
+    private float fallSpeed = 5f;
+    private float targetY = 0.5f;
 
     void Start()
     {
@@ -29,12 +30,35 @@ public class Booster : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        // Fall logic
+        if (transform.position.y > targetY)
+        {
+            transform.Translate(Vector3.down * fallSpeed * Time.deltaTime);
+        }
+    }
+
     void OnTriggerEnter(Collider other)
     {
         ActorController actor = other.GetComponent<ActorController>();
         if (actor != null)
         {
-            actor.OnBoosterCollected(type);
+            // Generate random type
+            BoosterType randomType = (BoosterType)Random.Range(0, System.Enum.GetValues(typeof(BoosterType)).Length);
+            
+            actor.OnBoosterCollected(randomType);
+            
+            // Show Toast if it's the player
+            if (actor is PlayerController)
+            {
+                UIManager ui = FindFirstObjectByType<UIManager>();
+                if (ui != null)
+                {
+                    ui.ShowToast("Collected: " + randomType.ToString());
+                }
+            }
+
             Destroy(gameObject);
         }
     }

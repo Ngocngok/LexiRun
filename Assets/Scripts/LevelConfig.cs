@@ -11,6 +11,7 @@ public class DifficultySettings
     public float botPauseChance; // 0-1, chance to pause when reaching a letter
     public float botPauseMinDuration;
     public float botPauseMaxDuration;
+    public int wordsToWin = 3;
 }
 
 [CreateAssetMenu(fileName = "LevelConfig", menuName = "LexiRun/Level Config")]
@@ -26,7 +27,8 @@ public class LevelConfig : ScriptableObject
         botSpeed = 3.5f,
         botPauseChance = 0.7f,
         botPauseMinDuration = 1f,
-        botPauseMaxDuration = 2f
+        botPauseMaxDuration = 2f,
+        wordsToWin = 2
     };
     
     public DifficultySettings normalSettings = new DifficultySettings
@@ -38,7 +40,8 @@ public class LevelConfig : ScriptableObject
         botSpeed = 4f,
         botPauseChance = 0.4f,
         botPauseMinDuration = 0.5f,
-        botPauseMaxDuration = 1f
+        botPauseMaxDuration = 1f,
+        wordsToWin = 3
     };
     
     public DifficultySettings hardSettings = new DifficultySettings
@@ -50,16 +53,17 @@ public class LevelConfig : ScriptableObject
         botSpeed = 4.5f,
         botPauseChance = 0f,
         botPauseMinDuration = 0f,
-        botPauseMaxDuration = 0f
+        botPauseMaxDuration = 0f,
+        wordsToWin = 3
     };
     
     public DifficultySettings GetSettingsForLevel(int level)
     {
-        if (level >= 1 && level <= 3)
+        if (level == 1)
         {
             return easySettings;
         }
-        else if (level >= 4 && level <= 7)
+        else if (level >= 2 && level <= 4)
         {
             return normalSettings;
         }

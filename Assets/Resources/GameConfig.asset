@@ -26,8 +26,8 @@ MonoBehaviour:
   hpLossAmount: 1
   wordsToWin: 3
   wordCompletionDelay: 1
-  touchCooldown: 0.5
-  characterPushForce: 5
+  touchCooldown: 2
+  characterPushForce: 40
   maxBombs: 3
   bombSpawnIntervalMin: 4
   bombSpawnIntervalMax: 6
@@ -37,12 +37,7 @@ MonoBehaviour:
   boosterSpawnIntervalMin: 4
   boosterSpawnIntervalMax: 6
   boosterDuration: 3
-  boosterPrefabs:
-  - {fileID: 1238280623182501357, guid: f62064fb376cee84ca6e3544b453c12f, type: 3}
-  - {fileID: 3273027407416835139, guid: 6941baca401d3be49be577967a3e0b93, type: 3}
-  - {fileID: 3977396011493431564, guid: 83749538c4567fb47bf1a955a99a14fe, type: 3}
-  - {fileID: 3444700969592231439, guid: a473bd8a8b0901240b68c00ddca18a17, type: 3}
-  - {fileID: 1818340905161090186, guid: cb6f1fb477e3e9a42b7668b6c96a03ac, type: 3}
+  mysteryBoosterPrefab: {fileID: 1543612606566242990, guid: ff14b0c87f9fdf94c8818c4ee6394907, type: 3}
   shieldVisualPrefab: {fileID: 8858082937766265789, guid: 2d91f897ab9b4e04bae17824fde939e9, type: 3}
   arenaWidth: 30
   arenaHeight: 40

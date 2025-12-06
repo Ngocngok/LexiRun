@@ -233,8 +233,8 @@ public abstract class ActorController : MonoBehaviour
         
         if (AudioManager.Instance != null)
         {
-            if (isPositive) AudioManager.Instance.PlayCorrectLetter();
-            else AudioManager.Instance.PlayWrongLetter();
+            if (isPositive) AudioManager.Instance.PlayPowerUp();
+            else AudioManager.Instance.PlayPowerDown();
         }
 
         // Trigger vibration for booster collection
@@ -334,7 +334,8 @@ public abstract class ActorController : MonoBehaviour
             AudioManager.Instance.PlayWordComplete();
         }
         
-        if (completedWords >= gameManager.config.wordsToWin)
+        int targetWords = gameManager.GetWordsToWin();
+        if (completedWords >= targetWords)
         {
             gameManager.OnActorWon(this);
         }

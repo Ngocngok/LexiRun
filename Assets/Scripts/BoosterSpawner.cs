@@ -37,34 +37,10 @@ public class BoosterSpawner : MonoBehaviour
 
     private void SpawnBooster()
     {
-        if (config.boosterPrefabs == null || config.boosterPrefabs.Length == 0)
+        if (config.mysteryBoosterPrefab == null)
         {
-            Debug.LogWarning("Booster Prefabs not assigned in GameConfig!");
+            Debug.LogWarning("Mystery Booster Prefab not assigned in GameConfig!");
             return;
-        }
-
-        // Random type
-        BoosterType randomType = (BoosterType)Random.Range(0, System.Enum.GetValues(typeof(BoosterType)).Length);
-        
-        // Find matching prefab
-        GameObject prefabToSpawn = null;
-        foreach (var prefab in config.boosterPrefabs)
-        {
-            if (prefab != null)
-            {
-                Booster b = prefab.GetComponent<Booster>();
-                if (b != null && b.type == randomType)
-                {
-                    prefabToSpawn = prefab;
-                    break;
-                }
-            }
-        }
-
-        if (prefabToSpawn == null)
-        {
-            // Fallback: just pick a random one if exact match fails (shouldn't happen if setup correctly)
-             prefabToSpawn = config.boosterPrefabs[Random.Range(0, config.boosterPrefabs.Length)];
         }
 
         // Position randomly
@@ -73,11 +49,11 @@ public class BoosterSpawner : MonoBehaviour
 
         Vector3 randomPos = new Vector3(
             Random.Range(-halfWidth, halfWidth),
-            0.5f,
+            10f, // Start high up to fall
             Random.Range(-halfHeight, halfHeight)
         );
 
-        GameObject boosterObj = Instantiate(prefabToSpawn, randomPos, Quaternion.identity, transform);
+        GameObject boosterObj = Instantiate(config.mysteryBoosterPrefab, randomPos, Quaternion.identity, transform);
         activeBoosters.Add(boosterObj);
     }
 }

@@ -48,6 +48,10 @@ public class UIManager : MonoBehaviour
     public Button tutorialNextButton2;
     public Button tutorialNextButton3;
     public Button tutorialOKButton;
+
+    [Header("Toast Notification")]
+    public GameObject toastPanel;
+    public Text toastText;
     
     private PlayerController player;
     private int currentTutorialSlide = 1;
@@ -143,6 +147,25 @@ public class UIManager : MonoBehaviour
         }
         
         UpdateBotInfo();
+    }
+
+    public void ShowToast(string message)
+    {
+        if (toastPanel != null && toastText != null)
+        {
+            toastText.text = message;
+            
+            // Ensure ToastController is attached to handle animation
+            ToastController controller = toastPanel.GetComponent<ToastController>();
+            if (controller == null)
+            {
+                controller = toastPanel.AddComponent<ToastController>();
+            }
+            
+            // Force reset by disabling and enabling
+            toastPanel.SetActive(false);
+            toastPanel.SetActive(true);
+        }
     }
     
     void UpdatePlayerHUD()

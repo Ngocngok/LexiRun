@@ -21,21 +21,24 @@ MonoBehaviour:
     botPauseChance: 0.9
     botPauseMinDuration: 3
     botPauseMaxDuration: 6
+    wordsToWin: 2
   normalSettings:
     difficultyName: Normal
     minWordLength: 4
     maxWordLength: 6
     timeLimit: 150
-    botSpeed: 4
+    botSpeed: 2.5
     botPauseChance: 0.4
     botPauseMinDuration: 0.5
     botPauseMaxDuration: 1
+    wordsToWin: 3
   hardSettings:
     difficultyName: Hard
     minWordLength: 7
     maxWordLength: 10
     timeLimit: 130
-    botSpeed: 4.5
+    botSpeed: 3.5
     botPauseChance: 0
     botPauseMinDuration: 0
     botPauseMaxDuration: 0
+    wordsToWin: 3

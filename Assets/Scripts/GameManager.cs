@@ -577,4 +577,13 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    public int GetWordsToWin()
+    {
+        if (currentDifficulty != null)
+        {
+            return currentDifficulty.wordsToWin;
+        }
+        return config.wordsToWin;
+    }
 }

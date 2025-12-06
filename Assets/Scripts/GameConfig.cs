@@ -39,7 +39,7 @@ public class GameConfig : ScriptableObject
     public float boosterSpawnIntervalMin = 4f;
     public float boosterSpawnIntervalMax = 6f;
     public float boosterDuration = 3f; // For Slow, SpeedUp, Trap, FreezeAll
-    public GameObject[] boosterPrefabs; // Array to hold prefabs for each type
+    public GameObject mysteryBoosterPrefab; // Single mystery prefab
     public GameObject shieldVisualPrefab;
 
     [Header("Arena Settings")]
