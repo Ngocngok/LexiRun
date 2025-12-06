@@ -21,6 +21,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip gameLoseSFX;
     public AudioClip powerUpSFX;
     public AudioClip powerDownSFX;
+    public AudioClip bombExplosionSFX;
     
     void Awake()
     {
@@ -117,4 +118,5 @@ public class AudioManager : MonoBehaviour
     public void PlayGameLose() => PlaySFX(gameLoseSFX);
     public void PlayPowerUp() => PlaySFX(powerUpSFX);
     public void PlayPowerDown() => PlaySFX(powerDownSFX);
+    public void PlayBombExplosion() => PlaySFX(bombExplosionSFX);
 }

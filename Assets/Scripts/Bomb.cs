@@ -41,8 +41,18 @@ public class Bomb : MonoBehaviour
             victim.OnBombHit();
         }
 
-        // Visual effects (placeholder)
-        // In a real implementation, spawn a particle system here
+        // Spawn Explosion VFX
+        if (GameManager.Instance != null && GameManager.Instance.config.bombExplosionVFX != null)
+        {
+            Instantiate(GameManager.Instance.config.bombExplosionVFX, transform.position, Quaternion.identity);
+        }
+
+        // Play Explosion Sound
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayBombExplosion();
+        }
+
         Debug.Log($"Bomb exploded on {victim.name}!");
 
         // Destroy the bomb object

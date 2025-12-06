@@ -113,8 +113,8 @@ public abstract class ActorController : MonoBehaviour
     
     protected virtual void OnCorrectTouch(LetterNode node)
     {
-        // Lock the node for 2 seconds
-        node.LockNode(2.0f);
+        // Lock the node for 4 seconds
+        node.LockNode(4.0f);
 
         wordProgress.FillLetter(node.letter);
         
@@ -188,16 +188,20 @@ public abstract class ActorController : MonoBehaviour
 
     public virtual void OnBombHit()
     {
-        // Trigger camera shake effect
-        if (CameraShake.Instance != null)
+        // Only play effects for player
+        if (this is PlayerController)
         {
-            CameraShake.Instance.Shake();
-        }
+            // Trigger camera shake effect
+            if (CameraShake.Instance != null)
+            {
+                CameraShake.Instance.Shake();
+            }
 
-        // Trigger vibration for bomb hit
-        if (VibrationManager.Instance != null)
-        {
-            VibrationManager.Instance.VibrateWrongLetter();
+            // Trigger vibration for bomb hit
+            if (VibrationManager.Instance != null)
+            {
+                VibrationManager.Instance.VibrateWrongLetter();
+            }
         }
 
         // If character has letters, remove one random letter
@@ -210,16 +214,11 @@ public abstract class ActorController : MonoBehaviour
                 floatingWordDisplay.UpdateWord(wordProgress);
             }
             
-            // Play sound/VFX if available
-            if (AudioManager.Instance != null)
+            // Play sound/VFX if available (Only for player)
+            if (this is PlayerController && AudioManager.Instance != null)
             {
                 AudioManager.Instance.PlayWrongLetter(); // Reuse wrong letter sound for now
             }
-            
-            // Apply speed penalty as well? The requirement says "just like when step on wrong node"
-            // But also "if character has no letter, nothing happen".
-            // Let's assume the speed penalty is part of the "wrong node" experience we added earlier.
-            // ApplySpeedPenalty(); // Removed as per feedback
         }
     }
 
@@ -228,20 +227,23 @@ public abstract class ActorController : MonoBehaviour
         Debug.Log($"{actorName} collected {type}");
         float duration = gameManager.config.boosterDuration;
 
-        // Sound and Vibration Logic
-        bool isPositive = (type == BoosterType.Shield || type == BoosterType.SpeedUp || type == BoosterType.FreezeAllOther);
-        
-        if (AudioManager.Instance != null)
+        // Sound and Vibration Logic (Only for player)
+        if (this is PlayerController)
         {
-            if (isPositive) AudioManager.Instance.PlayPowerUp();
-            else AudioManager.Instance.PlayPowerDown();
-        }
+            bool isPositive = (type == BoosterType.Shield || type == BoosterType.SpeedUp || type == BoosterType.FreezeAllOther);
+            
+            if (AudioManager.Instance != null)
+            {
+                if (isPositive) AudioManager.Instance.PlayPowerUp();
+                else AudioManager.Instance.PlayPowerDown();
+            }
 
-        // Trigger vibration for booster collection
-        if (VibrationManager.Instance != null)
-        {
-            if (isPositive) VibrationManager.Instance.VibrateCorrectLetter();
-            else VibrationManager.Instance.VibrateWrongLetter();
+            // Trigger vibration for booster collection
+            if (VibrationManager.Instance != null)
+            {
+                if (isPositive) VibrationManager.Instance.VibrateCorrectLetter();
+                else VibrationManager.Instance.VibrateWrongLetter();
+            }
         }
 
         switch (type)

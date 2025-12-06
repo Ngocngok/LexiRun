@@ -35,6 +35,8 @@ public class GameManager : MonoBehaviour
     private const float DARK_DURATION = 3f;
     private Light mainLight;
     private float originalLightIntensity;
+    private float targetLightIntensity;
+    private float lightTransitionSpeed = 2f; // 1 / 0.5s = 2
     
     void Awake()
     {
@@ -76,6 +78,7 @@ public class GameManager : MonoBehaviour
             {
                 mainLight = l;
                 originalLightIntensity = mainLight.intensity;
+                targetLightIntensity = originalLightIntensity;
                 break;
             }
         }
@@ -88,6 +91,15 @@ public class GameManager : MonoBehaviour
         if (!gameActive) return;
 
         HandleGameEvents();
+        UpdateLighting();
+    }
+
+    void UpdateLighting()
+    {
+        if (mainLight != null)
+        {
+            mainLight.intensity = Mathf.Lerp(mainLight.intensity, targetLightIntensity, Time.deltaTime * lightTransitionSpeed);
+        }
     }
 
     void HandleGameEvents()
@@ -126,8 +138,8 @@ public class GameManager : MonoBehaviour
     {
         if (mainLight != null)
         {
-            // Reduce intensity to 10% or restore
-            mainLight.intensity = enable ? originalLightIntensity * 0.1f : originalLightIntensity;
+            // Set target intensity
+            targetLightIntensity = enable ? originalLightIntensity * 0.0f : originalLightIntensity;
         }
     }
 

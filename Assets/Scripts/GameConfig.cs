@@ -33,6 +33,7 @@ public class GameConfig : ScriptableObject
     public float bombSpawnIntervalMax = 6f;
     public float bombExplosionRadius = 2f;
     public GameObject bombPrefab;
+    public GameObject bombExplosionVFX;
 
     [Header("Booster Settings")]
     public int maxBoosters = 3;

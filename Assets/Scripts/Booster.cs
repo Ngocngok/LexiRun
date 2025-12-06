@@ -55,7 +55,26 @@ public class Booster : MonoBehaviour
                 UIManager ui = FindFirstObjectByType<UIManager>();
                 if (ui != null)
                 {
-                    ui.ShowToast("Collected: " + randomType.ToString());
+                    switch (randomType)
+                    {
+                        case BoosterType.Shield:
+                            ui.ShowToast("Shield up!");
+                            break;
+                        case BoosterType.Slow:
+                            ui.ShowToast("Slowed down!");
+                            break;
+                        case BoosterType.SpeedUp:
+                            ui.ShowToast("Haste!");
+                            break;
+                        case BoosterType.Trap:
+                            ui.ShowToast("Trap deployed!");
+                            break;
+                        case BoosterType.FreezeAllOther:
+                            ui.ShowToast("Freezing all opponents!");
+                            break;
+                            
+                            
+                    }
                 }
             }
 

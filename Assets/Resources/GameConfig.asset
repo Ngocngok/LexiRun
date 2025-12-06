@@ -33,6 +33,7 @@ MonoBehaviour:
   bombSpawnIntervalMax: 6
   bombExplosionRadius: 2
   bombPrefab: {fileID: 8008374092417277172, guid: 47571fa21deb6484a8b32f010f5cf3c8, type: 3}
+  bombExplosionVFX: {fileID: 1101452535904402, guid: 91acdbd2820f9ce418996a0a24d91079, type: 3}
   maxBoosters: 3
   boosterSpawnIntervalMin: 4
   boosterSpawnIntervalMax: 6

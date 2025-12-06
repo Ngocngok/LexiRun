@@ -200,7 +200,8 @@ public class UIManager : MonoBehaviour
         
         if (playerScoreText != null)
         {
-            playerScoreText.text = player.completedWords + "/3";
+            int targetWords = GameManager.Instance != null ? GameManager.Instance.GetWordsToWin() : 3;
+            playerScoreText.text = player.completedWords + "/" + targetWords;
         }
     }
     
@@ -208,20 +209,22 @@ public class UIManager : MonoBehaviour
     {
         if (bots == null || bots.Count == 0) return;
         
+        int targetWords = GameManager.Instance != null ? GameManager.Instance.GetWordsToWin() : 3;
+        
         // Update bot scores
         if (bots.Count > 0 && bot1ScoreText != null)
         {
-            bot1ScoreText.text = bots[0].completedWords + "/3";
+            bot1ScoreText.text = bots[0].completedWords + "/" + targetWords;
         }
         
         if (bots.Count > 1 && bot2ScoreText != null)
         {
-            bot2ScoreText.text = bots[1].completedWords + "/3";
+            bot2ScoreText.text = bots[1].completedWords + "/" + targetWords;
         }
         
         if (bots.Count > 2 && bot3ScoreText != null)
         {
-            bot3ScoreText.text = bots[2].completedWords + "/3";
+            bot3ScoreText.text = bots[2].completedWords + "/" + targetWords;
         }
     }
     
