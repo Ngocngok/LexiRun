@@ -37,20 +37,11 @@ public class BombSpawner : MonoBehaviour
 
     private void SpawnBomb()
     {
-        // Create bomb visual
-        GameObject bombObj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        bombObj.name = "Bomb";
-        bombObj.transform.SetParent(transform);
-        
-        // Set color to red
-        MeshRenderer renderer = bombObj.GetComponent<MeshRenderer>();
-        if (renderer != null)
+        if (config.bombPrefab == null)
         {
-            renderer.material.color = Color.red;
+            Debug.LogWarning("Bomb Prefab not assigned in GameConfig!");
+            return;
         }
-
-        // Add Bomb script
-        bombObj.AddComponent<Bomb>();
 
         // Position randomly within arena
         // Arena is centered at 0,0
@@ -63,8 +54,7 @@ public class BombSpawner : MonoBehaviour
             Random.Range(-halfHeight, halfHeight)
         );
 
-        bombObj.transform.position = randomPos;
-
+        GameObject bombObj = Instantiate(config.bombPrefab, randomPos, Quaternion.identity, transform);
         activeBombs.Add(bombObj);
     }
 }

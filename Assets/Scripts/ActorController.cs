@@ -22,6 +22,7 @@ public abstract class ActorController : MonoBehaviour
     protected const float SPEED_REDUCTION_MULTIPLIER = 0.5f;
 
     protected bool hasShield = false;
+    protected GameObject currentShieldVisual;
     protected bool isFrozen = false;
     protected float freezeTimer = 0f;
     
@@ -136,20 +137,69 @@ public abstract class ActorController : MonoBehaviour
     
     protected virtual void OnWrongTouch(LetterNode node)
     {
+        // Base implementation handles shield logic
+        // Derived classes should check hasShield before applying penalties
+        // But since base.OnWrongTouch() is called first, we need a way to signal if shield was used.
+        // However, we can't change the return type easily without breaking everything.
+        
+        // Instead, we'll handle the shield consumption here, but derived classes need to know.
+        // Actually, the derived classes call base.OnWrongTouch(node).
+        // If I consume the shield here, the derived class continues execution.
+        
+        // So, I will NOT consume the shield here if I want derived classes to check it.
+        // OR, I consume it here, but derived classes check if it WAS active? No.
+        
+        // Let's change the design slightly:
+        // Derived classes are responsible for checking shield.
+        // Base class provides a helper method or property?
+        
+        // Actually, let's just keep the logic here but make sure derived classes respect it.
+        // The issue is that base.OnWrongTouch is void.
+        
         if (hasShield)
         {
             hasShield = false;
+            if (currentShieldVisual != null)
+            {
+                Destroy(currentShieldVisual);
+            }
             Debug.Log($"{actorName} used Shield!");
-            // Visual feedback for shield break could go here
             return;
         }
 
         ApplySpeedPenalty();
-        // Override in derived classes
+    }
+    
+    // Helper to check if shield was just consumed or is active
+    protected bool CheckAndConsumeShield()
+    {
+        if (hasShield)
+        {
+            hasShield = false;
+            if (currentShieldVisual != null)
+            {
+                Destroy(currentShieldVisual);
+            }
+            Debug.Log($"{actorName} used Shield!");
+            return true;
+        }
+        return false;
     }
 
     public virtual void OnBombHit()
     {
+        // Trigger camera shake effect
+        if (CameraShake.Instance != null)
+        {
+            CameraShake.Instance.Shake();
+        }
+
+        // Trigger vibration for bomb hit
+        if (VibrationManager.Instance != null)
+        {
+            VibrationManager.Instance.VibrateWrongLetter();
+        }
+
         // If character has letters, remove one random letter
         if (wordProgress.GetProgress() > 0)
         {
@@ -178,10 +228,32 @@ public abstract class ActorController : MonoBehaviour
         Debug.Log($"{actorName} collected {type}");
         float duration = gameManager.config.boosterDuration;
 
+        // Sound and Vibration Logic
+        bool isPositive = (type == BoosterType.Shield || type == BoosterType.SpeedUp || type == BoosterType.FreezeAllOther);
+        
+        if (AudioManager.Instance != null)
+        {
+            if (isPositive) AudioManager.Instance.PlayCorrectLetter();
+            else AudioManager.Instance.PlayWrongLetter();
+        }
+
+        // Trigger vibration for booster collection
+        if (VibrationManager.Instance != null)
+        {
+            if (isPositive) VibrationManager.Instance.VibrateCorrectLetter();
+            else VibrationManager.Instance.VibrateWrongLetter();
+        }
+
         switch (type)
         {
             case BoosterType.Shield:
                 hasShield = true;
+                if (gameManager.config.shieldVisualPrefab != null)
+                {
+                    if (currentShieldVisual != null) Destroy(currentShieldVisual);
+                    currentShieldVisual = Instantiate(gameManager.config.shieldVisualPrefab, transform);
+                    currentShieldVisual.transform.localPosition = Vector3.zero;
+                }
                 break;
             case BoosterType.Slow:
                 ApplySpeedModifier(0.5f, duration);

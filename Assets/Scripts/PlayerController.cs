@@ -115,7 +115,31 @@ public class PlayerController : ActorController
 
     protected override void OnWrongTouch(LetterNode node)
     {
-        base.OnWrongTouch(node);
+        // Check if shield protects us
+        // Note: base.OnWrongTouch() also checks shield but we need to know if we should proceed.
+        // Since base.OnWrongTouch() consumes the shield if present, we can't just call it and then check.
+        // We need to check BEFORE calling base, or use a modified base method.
+        
+        // However, ActorController.OnWrongTouch logic was:
+        // if (hasShield) { consume; return; }
+        // else { ApplySpeedPenalty(); }
+        
+        // So if we call base.OnWrongTouch(node), it might consume the shield.
+        // But we don't know if it did.
+        
+        // Let's use the new helper method if we want to be clean, 
+        // OR just check hasShield here before calling base.
+        
+        bool protectedByShield = hasShield;
+        
+        base.OnWrongTouch(node); // This will consume shield if active, or apply speed penalty if not.
+        
+        if (protectedByShield)
+        {
+            // Shield was active and consumed by base.OnWrongTouch (or we should assume it was).
+            // So we skip the rest of the penalties.
+            return;
+        }
         
         // Trigger camera shake effect
         if (CameraShake.Instance != null)

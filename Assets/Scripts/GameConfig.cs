@@ -32,12 +32,15 @@ public class GameConfig : ScriptableObject
     public float bombSpawnIntervalMin = 4f;
     public float bombSpawnIntervalMax = 6f;
     public float bombExplosionRadius = 2f;
+    public GameObject bombPrefab;
 
     [Header("Booster Settings")]
     public int maxBoosters = 3;
     public float boosterSpawnIntervalMin = 4f;
     public float boosterSpawnIntervalMax = 6f;
     public float boosterDuration = 3f; // For Slow, SpeedUp, Trap, FreezeAll
+    public GameObject[] boosterPrefabs; // Array to hold prefabs for each type
+    public GameObject shieldVisualPrefab;
 
     [Header("Arena Settings")]
     public float arenaWidth = 30f;
@@ -46,6 +49,7 @@ public class GameConfig : ScriptableObject
     public int arenaRows = 7;
     public float nodeRandomOffsetMin = 0.3f;
     public float nodeRandomOffsetMax = 0.5f;
+    public GameObject[] mapPrefabs;
     
     [Header("Floating Word Display Settings")]
     public float floatingTextHeight = 2f;

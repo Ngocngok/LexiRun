@@ -27,17 +27,39 @@ MonoBehaviour:
   wordsToWin: 3
   wordCompletionDelay: 1
   touchCooldown: 0.5
+  characterPushForce: 5
+  maxBombs: 3
+  bombSpawnIntervalMin: 4
+  bombSpawnIntervalMax: 6
+  bombExplosionRadius: 2
+  bombPrefab: {fileID: 8008374092417277172, guid: 47571fa21deb6484a8b32f010f5cf3c8, type: 3}
+  maxBoosters: 3
+  boosterSpawnIntervalMin: 4
+  boosterSpawnIntervalMax: 6
+  boosterDuration: 3
+  boosterPrefabs:
+  - {fileID: 1238280623182501357, guid: f62064fb376cee84ca6e3544b453c12f, type: 3}
+  - {fileID: 3273027407416835139, guid: 6941baca401d3be49be577967a3e0b93, type: 3}
+  - {fileID: 3977396011493431564, guid: 83749538c4567fb47bf1a955a99a14fe, type: 3}
+  - {fileID: 3444700969592231439, guid: a473bd8a8b0901240b68c00ddca18a17, type: 3}
+  - {fileID: 1818340905161090186, guid: cb6f1fb477e3e9a42b7668b6c96a03ac, type: 3}
+  shieldVisualPrefab: {fileID: 8858082937766265789, guid: 2d91f897ab9b4e04bae17824fde939e9, type: 3}
   arenaWidth: 30
   arenaHeight: 40
   arenaColumns: 4
   arenaRows: 7
   nodeRandomOffsetMin: 0.2
   nodeRandomOffsetMax: 1
+  mapPrefabs:
+  - {fileID: 1554373641768112995, guid: 4b5ee0065e653964e861c00948b4845c, type: 3}
+  - {fileID: 3326431851234509199, guid: c842c9e0ef69f134ab015b5e3ae4a930, type: 3}
+  - {fileID: 339951133428143768, guid: da3f0e0917331604298259097351bd54, type: 3}
   floatingTextHeight: 2
   floatingTextLetterSpacing: 1.5
   playerFloatingTextSize: 120
   botFloatingTextSize: 80
   unfilledLetterColor: {r: 0.17892374, g: 1, b: 0.08018869, a: 1}
+  botUnfilledLetterColor: {r: 1, g: 0, b: 0, a: 1}
   playerFilledLetterColor: {r: 0, g: 1, b: 0, a: 1}
   botFilledLetterColor: {r: 1, g: 0, b: 0, a: 1}
   wordList:

@@ -7,6 +7,7 @@ public class LetterNode : MonoBehaviour
     public char letter;
     public TextMeshPro letterText;
     public MeshRenderer nodeRenderer;
+    public GameObject lockVisualPrefab;
     
     private Material nodeMaterial;
     private Color defaultColor = Color.white;
@@ -26,24 +27,27 @@ public class LetterNode : MonoBehaviour
             nodeMaterial = nodeRenderer.material;
         }
         
-        // Create lock visual (Cube)
-        lockVisual = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        lockVisual.transform.SetParent(transform);
-        lockVisual.transform.localPosition = new Vector3(0, 1.0f, 0); // Position above the node
-        lockVisual.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-        lockVisual.name = "LockVisual";
-        
-        // Remove collider from lock visual so it doesn't interfere with physics
-        Destroy(lockVisual.GetComponent<Collider>());
-        
-        // Set color to black or something distinct
-        MeshRenderer lockRenderer = lockVisual.GetComponent<MeshRenderer>();
-        if (lockRenderer != null)
+        if (lockVisualPrefab != null)
         {
-            lockRenderer.material.color = Color.black;
+            lockVisual = Instantiate(lockVisualPrefab, transform);
+            lockVisual.transform.localPosition = new Vector3(0, 1.0f, 0); // Position above the node
+            lockVisual.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            lockVisual.name = "LockVisual";
+            lockVisual.SetActive(false);
         }
-        
-        lockVisual.SetActive(false);
+        else
+        {
+            // Fallback if prefab is missing
+            lockVisual = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            lockVisual.transform.SetParent(transform);
+            lockVisual.transform.localPosition = new Vector3(0, 1.0f, 0);
+            lockVisual.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            lockVisual.name = "LockVisual";
+            Destroy(lockVisual.GetComponent<Collider>());
+            MeshRenderer lockRenderer = lockVisual.GetComponent<MeshRenderer>();
+            if (lockRenderer != null) lockRenderer.material.color = Color.black;
+            lockVisual.SetActive(false);
+        }
     }
     
     void Update()

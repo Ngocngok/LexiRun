@@ -246,7 +246,14 @@ public class BotController : ActorController
     
     protected override void OnWrongTouch(LetterNode node)
     {
+        bool protectedByShield = hasShield;
+        
         base.OnWrongTouch(node);
+        
+        if (protectedByShield)
+        {
+            return;
+        }
         
         mistakeCount++;
         

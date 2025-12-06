@@ -27,6 +27,14 @@ public class GameManager : MonoBehaviour
     private UIManager uiManager;
     private int currentLevel = 1;
     private DifficultySettings currentDifficulty;
+
+    // Event System
+    private float eventTimer = 0f;
+    private bool isDarkEventActive = false;
+    private const float EVENT_INTERVAL = 10f;
+    private const float DARK_DURATION = 3f;
+    private Light mainLight;
+    private float originalLightIntensity;
     
     void Awake()
     {
@@ -59,8 +67,97 @@ public class GameManager : MonoBehaviour
         {
             currentDifficulty = levelConfig.GetSettingsForLevel(currentLevel);
         }
+
+        // Find Directional Light
+        Light[] lights = FindObjectsByType<Light>(FindObjectsSortMode.None);
+        foreach (Light l in lights)
+        {
+            if (l.type == LightType.Directional)
+            {
+                mainLight = l;
+                originalLightIntensity = mainLight.intensity;
+                break;
+            }
+        }
         
         InitializeGame();
+    }
+
+    void Update()
+    {
+        if (!gameActive) return;
+
+        HandleGameEvents();
+    }
+
+    void HandleGameEvents()
+    {
+        eventTimer += Time.deltaTime;
+
+        if (!isDarkEventActive)
+        {
+            if (eventTimer >= EVENT_INTERVAL)
+            {
+                // Start Dark Event
+                ToggleDarkness(true);
+                isDarkEventActive = true;
+                // Reset timer to count duration of darkness
+                eventTimer = 0f;
+            }
+        }
+        else
+        {
+            if (eventTimer >= DARK_DURATION)
+            {
+                // End Dark Event
+                ToggleDarkness(false);
+                
+                // Trigger Shuffle Event
+                ShuffleNodes();
+
+                isDarkEventActive = false;
+                // Reset timer to start counting towards next interval
+                eventTimer = 0f;
+            }
+        }
+    }
+
+    void ToggleDarkness(bool enable)
+    {
+        if (mainLight != null)
+        {
+            // Reduce intensity to 10% or restore
+            mainLight.intensity = enable ? originalLightIntensity * 0.1f : originalLightIntensity;
+        }
+    }
+
+    void ShuffleNodes()
+    {
+        if (letterNodes == null || letterNodes.Count == 0) return;
+
+        // Get all current positions
+        List<Vector3> positions = new List<Vector3>();
+        foreach (var node in letterNodes)
+        {
+            positions.Add(node.transform.position);
+        }
+
+        // Shuffle positions
+        for (int i = 0; i < positions.Count; i++)
+        {
+            Vector3 temp = positions[i];
+            int randomIndex = Random.Range(i, positions.Count);
+            positions[i] = positions[randomIndex];
+            positions[randomIndex] = temp;
+        }
+
+        // Assign new positions to nodes
+        for (int i = 0; i < letterNodes.Count; i++)
+        {
+            letterNodes[i].transform.position = positions[i];
+        }
+        
+        Debug.Log("Nodes Shuffled!");
     }
     
     void InitializeGame()
@@ -112,6 +209,16 @@ public class GameManager : MonoBehaviour
         {
             GameObject arenaObj = new GameObject("Arena");
             arenaParent = arenaObj.transform;
+        }
+
+        // Spawn Map Prefab
+        if (config.mapPrefabs != null && config.mapPrefabs.Length > 0)
+        {
+            GameObject mapPrefab = config.mapPrefabs[Random.Range(0, config.mapPrefabs.Length)];
+            if (mapPrefab != null)
+            {
+                Instantiate(mapPrefab, Vector3.zero, Quaternion.identity, arenaParent);
+            }
         }
         
         // Create 26 letter nodes (A-Z) in a 4x7 grid with small random offsets

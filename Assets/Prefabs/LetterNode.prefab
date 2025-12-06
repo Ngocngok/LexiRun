@@ -73,6 +73,7 @@ MonoBehaviour:
   letter: 0
   letterText: {fileID: 996197559715950636}
   nodeRenderer: {fileID: 8239683695792744350}
+  lockVisualPrefab: {fileID: 8494192621071513210, guid: d40b927611ebd30498b0f51901787234, type: 3}
 --- !u!1 &1159690258542570866
 GameObject:
   m_ObjectHideFlags: 0
