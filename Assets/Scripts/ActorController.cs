@@ -169,7 +169,7 @@ public abstract class ActorController : MonoBehaviour
             // Apply speed penalty as well? The requirement says "just like when step on wrong node"
             // But also "if character has no letter, nothing happen".
             // Let's assume the speed penalty is part of the "wrong node" experience we added earlier.
-            ApplySpeedPenalty();
+            // ApplySpeedPenalty(); // Removed as per feedback
         }
     }
 
