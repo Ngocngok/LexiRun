@@ -34,12 +34,17 @@ MonoBehaviour:
   bombExplosionRadius: 2
   bombPrefab: {fileID: 8008374092417277172, guid: 47571fa21deb6484a8b32f010f5cf3c8, type: 3}
   bombExplosionVFX: {fileID: 1101452535904402, guid: 91acdbd2820f9ce418996a0a24d91079, type: 3}
+  nukeExplosionVFX: {fileID: 1475064962942672, guid: 156b5155cd2b0e3469377bac36f848e8, type: 3}
   maxBoosters: 3
   boosterSpawnIntervalMin: 4
   boosterSpawnIntervalMax: 6
   boosterDuration: 3
   mysteryBoosterPrefab: {fileID: 1543612606566242990, guid: ff14b0c87f9fdf94c8818c4ee6394907, type: 3}
   shieldVisualPrefab: {fileID: 8858082937766265789, guid: 2d91f897ab9b4e04bae17824fde939e9, type: 3}
+  stunEffectPrefab: {fileID: 375242176540227830, guid: 77dfa976b5a9d234c8b135193c9aec2b, type: 3}
+  cagePrefab: {fileID: 6304940729985111128, guid: 705e4e1cbbfc73c42a3e99b71bfd3d40, type: 3}
+  boosterLandEffectPrefab: {fileID: 1691208159328407485, guid: 536f518164ab53d47972c2c2eabbdf97, type: 3}
+  speedUpTrailPrefab: {fileID: 1546471759916860, guid: 0b5feaa66c6e8c749a7ab24cec81dde7, type: 3}
   arenaWidth: 30
   arenaHeight: 40
   arenaColumns: 4

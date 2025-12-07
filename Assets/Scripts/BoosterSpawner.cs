@@ -44,8 +44,8 @@ public class BoosterSpawner : MonoBehaviour
         }
 
         // Position randomly
-        float halfWidth = config.arenaWidth / 2f - 1f;
-        float halfHeight = config.arenaHeight / 2f - 1f;
+        float halfWidth = config.arenaWidth / 2f - 3f;
+        float halfHeight = config.arenaHeight / 2f - 3f;
 
         Vector3 randomPos = new Vector3(
             Random.Range(-halfWidth, halfWidth),

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public abstract class ActorController : MonoBehaviour
 {
@@ -26,6 +27,10 @@ public abstract class ActorController : MonoBehaviour
     protected bool isFrozen = false;
     protected float freezeTimer = 0f;
     
+    protected Coroutine cageCoroutine;
+    protected GameObject currentCageVisual;
+    protected GameObject currentSpeedTrail;
+
     protected virtual void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -291,6 +296,27 @@ public abstract class ActorController : MonoBehaviour
         moveSpeed = originalMoveSpeed * multiplier;
         isSpeedModified = true;
         speedModifierTimer = duration;
+
+        if (multiplier < 1.0f)
+        {
+            SpawnStunEffect();
+        }
+        else if (multiplier > 1.0f)
+        {
+            SpawnSpeedTrail();
+        }
+    }
+
+    protected void SpawnSpeedTrail()
+    {
+        if (currentSpeedTrail != null) Destroy(currentSpeedTrail);
+
+        if (gameManager != null && gameManager.config.speedUpTrailPrefab != null)
+        {
+            currentSpeedTrail = Instantiate(gameManager.config.speedUpTrailPrefab, transform);
+            currentSpeedTrail.transform.localPosition = Vector3.zero; // At feet
+            currentSpeedTrail.transform.localScale *= 2f; // 2x larger
+        }
     }
 
     public void ApplyFreeze(float duration)
@@ -299,6 +325,71 @@ public abstract class ActorController : MonoBehaviour
         freezeTimer = duration;
         // Stop movement immediately
         if (rb != null) rb.linearVelocity = Vector3.zero;
+        
+        SpawnStunEffect();
+
+        if (cageCoroutine != null) StopCoroutine(cageCoroutine);
+        if (currentCageVisual != null) Destroy(currentCageVisual);
+        cageCoroutine = StartCoroutine(CageSequence(duration));
+    }
+
+    protected IEnumerator CageSequence(float duration)
+    {
+        // 1. Spawn Cage above
+        if (gameManager != null && gameManager.config.cagePrefab != null)
+        {
+            currentCageVisual = Instantiate(gameManager.config.cagePrefab, transform);
+            currentCageVisual.transform.localPosition = new Vector3(0, 5f, 0); // Start high
+        }
+
+        // 2. Move Cage down (0.5s)
+        if (currentCageVisual != null)
+        {
+            float elapsed = 0f;
+            Vector3 startPos = currentCageVisual.transform.localPosition;
+            Vector3 endPos = Vector3.zero; 
+            
+            while (elapsed < 0.5f)
+            {
+                elapsed += Time.deltaTime;
+                currentCageVisual.transform.localPosition = Vector3.Lerp(startPos, endPos, elapsed / 0.5f);
+                yield return null;
+            }
+            currentCageVisual.transform.localPosition = endPos;
+        }
+        else
+        {
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        // 3. Wait for remaining duration
+        float remainingTime = duration - 1.0f; // 0.5 down + 0.5 up = 1.0 overhead
+        if (remainingTime > 0)
+        {
+            yield return new WaitForSeconds(remainingTime);
+        }
+
+        // 4. Move Cage up
+        if (currentCageVisual != null)
+        {
+            float elapsed = 0f;
+            Vector3 startPos = currentCageVisual.transform.localPosition;
+            Vector3 endPos = new Vector3(0, 5f, 0);
+            
+            while (elapsed < 0.5f)
+            {
+                elapsed += Time.deltaTime;
+                currentCageVisual.transform.localPosition = Vector3.Lerp(startPos, endPos, elapsed / 0.5f);
+                yield return null;
+            }
+        }
+
+        // 5. Destroy Cage
+        if (currentCageVisual != null)
+        {
+            Destroy(currentCageVisual);
+            currentCageVisual = null;
+        }
     }
 
     protected void HandleSpeedReduction()
@@ -322,6 +413,12 @@ public abstract class ActorController : MonoBehaviour
             {
                 moveSpeed = originalMoveSpeed;
                 isSpeedModified = false;
+                
+                if (currentSpeedTrail != null)
+                {
+                    Destroy(currentSpeedTrail);
+                    currentSpeedTrail = null;
+                }
             }
         }
     }
@@ -386,6 +483,28 @@ public abstract class ActorController : MonoBehaviour
             
             // Apply impulse force
             rb.AddForce(pushDirection * pushForce, ForceMode.Impulse);
+            
+            SpawnStunEffect();
+            SpawnExplosionEffect();
+        }
+    }
+
+    protected void SpawnExplosionEffect()
+    {
+        if (gameManager != null && gameManager.config.bombExplosionVFX != null)
+        {
+            GameObject explosion = Instantiate(gameManager.config.bombExplosionVFX, transform.position, Quaternion.identity);
+            explosion.transform.localScale *= 2f; // 2x larger
+        }
+    }
+
+    protected void SpawnStunEffect()
+    {
+        if (gameManager != null && gameManager.config.stunEffectPrefab != null)
+        {
+            Vector3 spawnPos = transform.position + Vector3.up * 2.5f;
+            GameObject stun = Instantiate(gameManager.config.stunEffectPrefab, spawnPos, Quaternion.Euler(-90,0,0), transform);
+            Destroy(stun, 2f);
         }
     }
 }

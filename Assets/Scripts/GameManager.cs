@@ -166,7 +166,7 @@ public class GameManager : MonoBehaviour
         // Assign new positions to nodes
         for (int i = 0; i < letterNodes.Count; i++)
         {
-            letterNodes[i].transform.position = positions[i];
+            letterNodes[i].JumpAndRollTo(positions[i], 0.5f);
         }
         
         Debug.Log("Nodes Shuffled!");
@@ -379,7 +379,7 @@ public class GameManager : MonoBehaviour
             newModel.name = "CharacterModel";
             newModel.transform.localPosition = new Vector3(0, -1, 0);
             newModel.transform.localRotation = Quaternion.identity;
-            newModel.transform.localScale = new Vector3(1.7f, 1.7f, 1.7f);
+            newModel.transform.localScale = new Vector3(1.85f, 1.85f, 1.85f);
             
             // Remove any colliders from the character model (player prefab has its own collider)
             Collider[] colliders = newModel.GetComponents<Collider>();
@@ -480,6 +480,11 @@ public class GameManager : MonoBehaviour
             {
                 uiManager.ShowTutorial();
             }
+            
+            // Show objective toast
+            int wordsToWin = GetWordsToWin();
+            string wordText = wordsToWin == 1 ? "word" : "words";
+            uiManager.ShowToast($"Collect {wordsToWin} {wordText} to win the game!");
         }
     }
     

@@ -45,16 +45,32 @@ public class BombSpawner : MonoBehaviour
 
         // Position randomly within arena
         // Arena is centered at 0,0
-        float halfWidth = config.arenaWidth / 2f - 1f; // Padding
-        float halfHeight = config.arenaHeight / 2f - 1f;
+        float halfWidth = config.arenaWidth / 2f - 3f; // Padding
+        float halfHeight = config.arenaHeight / 2f - 3f;
 
-        Vector3 randomPos = new Vector3(
+        Vector3 targetPos = new Vector3(
             Random.Range(-halfWidth, halfWidth),
             0.5f, // Height
             Random.Range(-halfHeight, halfHeight)
         );
 
-        GameObject bombObj = Instantiate(config.bombPrefab, randomPos, Quaternion.identity, transform);
+        // Start Position (Outside map)
+        // Pick a random direction
+        float angle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
+        float distance = Mathf.Max(config.arenaWidth, config.arenaHeight); // Start from edge distance
+        Vector3 startPos = new Vector3(
+            Mathf.Cos(angle) * distance,
+            10f, // Start high
+            Mathf.Sin(angle) * distance
+        );
+
+        GameObject bombObj = Instantiate(config.bombPrefab, startPos, Quaternion.identity, transform);
         activeBombs.Add(bombObj);
+
+        Bomb bombScript = bombObj.GetComponent<Bomb>();
+        if (bombScript != null)
+        {
+            bombScript.Initialize(startPos, targetPos, 2.5f); // 2.5 seconds for 3 bounces
+        }
     }
 }

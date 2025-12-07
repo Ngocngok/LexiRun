@@ -7158,6 +7158,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5975893718851862973, guid: 2ec6ba16b5a68ad4bbc1063538020ad1, type: 3}
+      propertyPath: m_Text
+      value: 'Toast Message: move up until you cannot pass'
+      objectReference: {fileID: 0}
+    - target: {fileID: 5975893718851862973, guid: 2ec6ba16b5a68ad4bbc1063538020ad1, type: 3}
+      propertyPath: m_FontData.m_BestFit
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5975893718851862973, guid: 2ec6ba16b5a68ad4bbc1063538020ad1, type: 3}
       propertyPath: m_FontData.m_MaxSize
       value: 78
       objectReference: {fileID: 0}
@@ -7243,6 +7251,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6054734925831425029, guid: 2ec6ba16b5a68ad4bbc1063538020ad1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6192086904210085080, guid: 2ec6ba16b5a68ad4bbc1063538020ad1, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -160
+      objectReference: {fileID: 0}
+    - target: {fileID: 6192086904210085080, guid: 2ec6ba16b5a68ad4bbc1063538020ad1, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -40
+      objectReference: {fileID: 0}
+    - target: {fileID: 6192086904210085080, guid: 2ec6ba16b5a68ad4bbc1063538020ad1, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6192086904210085080, guid: 2ec6ba16b5a68ad4bbc1063538020ad1, type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

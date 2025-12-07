@@ -34,6 +34,7 @@ public class GameConfig : ScriptableObject
     public float bombExplosionRadius = 2f;
     public GameObject bombPrefab;
     public GameObject bombExplosionVFX;
+    public GameObject nukeExplosionVFX;
 
     [Header("Booster Settings")]
     public int maxBoosters = 3;
@@ -42,6 +43,10 @@ public class GameConfig : ScriptableObject
     public float boosterDuration = 3f; // For Slow, SpeedUp, Trap, FreezeAll
     public GameObject mysteryBoosterPrefab; // Single mystery prefab
     public GameObject shieldVisualPrefab;
+    public GameObject stunEffectPrefab;
+    public GameObject cagePrefab;
+    public GameObject boosterLandEffectPrefab;
+    public GameObject speedUpTrailPrefab;
 
     [Header("Arena Settings")]
     public float arenaWidth = 30f;
