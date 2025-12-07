@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
     public Text playerHPText;
     public Text playerTimerText;
     public Text playerScoreText;
+    public Text levelText;
     public GameObject[] hearts;
     
     [Header("Bot Info")]
@@ -133,10 +134,15 @@ public class UIManager : MonoBehaviour
         
     }
     
-    public void Initialize(PlayerController player, List<BotController> bots)
+    public void Initialize(PlayerController player, List<BotController> bots, int currentLevel)
     {
         this.player = player;
         this.bots = bots;
+        
+        if (levelText != null)
+        {
+            levelText.text = "Level " + currentLevel;
+        }
     }
     
     void Update()
