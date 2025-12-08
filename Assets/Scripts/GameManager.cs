@@ -484,7 +484,7 @@ public class GameManager : MonoBehaviour
             // Show objective toast
             int wordsToWin = GetWordsToWin();
             string wordText = wordsToWin == 1 ? "word" : "words";
-            uiManager.ShowToast($"Collect {wordsToWin} {wordText} to win the game!");
+            uiManager.ShowToast($"Level {currentLevel}!\nCollect {wordsToWin} {wordText} to win the game!");
         }
     }
     

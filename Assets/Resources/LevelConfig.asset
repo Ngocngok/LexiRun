@@ -41,4 +41,4 @@ MonoBehaviour:
     botPauseChance: 0
     botPauseMinDuration: 0
     botPauseMaxDuration: 0
-    wordsToWin: 3
+    wordsToWin: 4
